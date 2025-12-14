@@ -1,0 +1,1552 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Peta Potensi Pariwisata Kab. Kulon Progo</title>
+    </head>
+    <body>
+         <!-- PANEL INSTRUKSI -->
+<div id="instruksi-layer" style="
+  display:none;
+  position:absolute;
+  top:78px; /* pas di bawah header biru */
+  left:calc(260px + (100% - 260px)/2); /* ketengah di atas peta (map mulai 260px dari kiri) */
+  transform:translateX(-50%);
+  background:#f5f5f5ee;
+  padding:8px 14px;
+  border-radius:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.18);
+  font-size:13px;
+  font-family:'Inter', sans-serif;
+  color:#333;
+  border:1px solid #dddddd;
+  z-index:9999;
+  align-items:center;
+  gap:8px;
+">
+  <span id="instruksi-text">
+    Klik salah satu wilayah kecamatan atau titik di peta untuk melihat informasi.
+  </span>
+
+  <!-- tombol X -->
+  <button id="instruksi-close" style="
+    border:none;
+    background:transparent;
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    color:#555;
+    padding:0 2px;
+  ">
+    ×
+  </button>
+</div>
+
+
+<!-- PANEL INFORMASI BESAR -->
+<div id="panel-info" style="
+  display:none;
+  position:absolute;
+  right:0;
+  top:70px;
+  width:260px;
+  height:calc(100% - 78px); /* sisanya sampai bawah */
+  background:white;
+  padding:16px 18px;
+  box-shadow:-2px 0 5px rgba(0,0,0,0.2);
+  z-index:9999;
+  overflow-y:auto;
+">
+  <div class="panel-info-header">
+  <span class="panel-info-title">INFORMASI</span>
+  <button class="panel-info-close" onclick="tutupPanel()">×</button>
+</div>
+
+
+  <div id="isi-panel-info" style="
+    margin-top:10px;
+    font-size:13px;
+    font-family:'Inter',sans-serif;
+    color:#333;
+  "></div>
+</div>
+
+<style>
+  
+ /* QGIS2WEB: layout map */
+#map {
+  position:absolute;
+  top:70px;       /* di bawah header biru */
+  left:260px;     /* lebar sidebar kiri */
+  right:0;
+  bottom:0;
+  transition:right 0.25s ease;
+}
+
+/* Panel info kebuka → map bergeser kiri */
+body.panel-open #map {
+  right:260px;    /* = lebar panel-info */
+}
+
+/* Instruksi posisi awal (tengah area map penuh) */
+#instruksi-layer {
+  transition:left 0.25s ease;
+  left:calc(260px + (100% - 260px)/2);
+}
+
+/* Instruksi saat panel-info kebuka (tengah area map yang menyempit) */
+body.panel-open #instruksi-layer {
+  left:calc(260px + (100% - 260px - 260px)/2);
+}
+#instruksi-layer {
+  display: none;
+}
+
+
+</style>
+    <!-- HEADER CUSTOM (ALA DEVANTA) -->
+    <div id="custom-header">
+      <div class="header-left">
+        <img src="images/transp.png" id="header-logo" alt="Logo">
+        <div class="header-title">
+          <h1>PETA POTENSI PARIWISATA DESA KABUPATEN KULON PROGO</h1>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <h2>Tahun 2025</h2>
+      </div>
+    </div>
+
+    <!-- SIDEBAR KIRI -->
+    <div id="sidebar">
+      <div class="section-title">
+    <img src="images/layerr.png">
+    <span>Layer</span>
+    </div>
+    <!-- Checkbox untuk layer -->
+      <label>
+        <input type="checkbox" id="cb_desa_wisata">
+        Desa Wisata 
+      </label>
+      <br>
+        <label>
+        <input type="checkbox" id="cb_wisata_alam">
+        Wisata Alam 
+      </label>
+      <br>
+        <label>
+        <input type="checkbox" id="cb_wisata_bahari">
+        Wisata Bahari 
+      </label>
+      <br>  
+        <label>
+        <input type="checkbox" id="cb_wisata_buatan">
+        Wisata Buatan 
+      </label>
+      <br>
+    <label>
+        <input type="checkbox" id="cb_wisata_budaya">
+        Wisata Budaya 
+      </label>
+      <br>
+      <label>
+        <input type="checkbox" id="cb_wisata_minat">
+        Wisata Minat 
+      </label>
+      <br>
+      <!-- <label>
+        <input type="checkbox" id="cb_jalan">
+        Jalan
+      </label>
+      <br> -->
+      <!-- <label>
+        <input type="checkbox" id="cb_akses_wisata">
+        Aksesibilitas Aufa
+      </label>
+      <br> -->
+      <label>
+        <input type="checkbox" id="cb_kecamatan">
+        Kecamatan 
+    </label>
+    <br>
+      <div class="section-title">
+    <img src="images/legenda.png">
+    <span>Legenda</span>
+</div>
+
+<!-- LEGEND: baruuu -->
+<div id="leg_wisata_bahari" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Wisata Bahari</div>
+
+    <div class="legend-item"><img src="legend/WisataBahari_7_01580.png"> 0 - 158</div>
+    <div class="legend-item"><img src="legend/WisataBahari_7_1584421.png"> 158 - 442</div>
+    <div class="legend-item"><img src="legend/WisataBahari_7_44213932.png"> 442 - 1393</div>
+    <div class="legend-item"><img src="legend/WisataBahari_7_139356623.png"> 1393 - 5662</div>
+    <div class="legend-item"><img src="legend/WisataBahari_7_5662446174.png"> 5662 - 44617</div>
+  </div>
+</div>
+<div id="leg_wisata_buatan" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Wisata Buatan</div>
+
+    <div class="legend-item"><img src="legend/WisataBuatan_6_01580.png"> 0 - 158</div>
+    <div class="legend-item"><img src="legend/WisataBuatan_6_1584421.png"> 158 - 442</div>
+    <div class="legend-item"><img src="legend/WisataBuatan_6_44213932.png"> 442 - 1393</div>
+    <div class="legend-item"><img src="legend/WisataBuatan_6_139356623.png"> 1393 - 5662</div>
+    <div class="legend-item"><img src="legend/WisataBuatan_6_5662446174.png"> 5662 - 44617</div>
+  </div>
+</div>
+<div id="leg_desa_wisata" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Desa Wisata</div>
+
+    <div class="legend-item"><img src="legend/DesaWisata_9_01580.png"> 0 - 158</div>
+    <div class="legend-item"><img src="legend/DesaWisata_9_1584421.png"> 158 - 442</div>
+    <div class="legend-item"><img src="legend/DesaWisata_9_44213932.png"> 442 - 1393</div>
+    <div class="legend-item"><img src="legend/DesaWisata_9_139356623.png"> 1393 - 5662</div>
+    <div class="legend-item"><img src="legend/DesaWisata_9_5662446174.png"> 5662 - 44617</div>
+  </div>
+</div>
+<div id="leg_wisata_alam" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Wisata Alam</div>
+    <div class="legend-item"><img src="legend/WisataAlam_8_01580.png"> 0 - 158</div>
+    <div class="legend-item"><img src="legend/WisataAlam_8_1584421.png"> 158 - 442</div>
+    <div class="legend-item"><img src="legend/WisataAlam_8_44213932.png"> 442 - 1393</div>
+    <div class="legend-item"><img src="legend/WisataAlam_8_139356623.png"> 1393 - 5662</div>
+    <div class="legend-item"><img src="legend/WisataAlam_8_5662446174.png"> 5662 - 44617</div>
+  </div>
+</div>
+<div id="leg_wisata_budaya" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Wisata Budaya</div>
+    <div class="legend-item"><img src="legend/WisataBudaya_5_394839480.png"> 394.8</div>
+  </div>
+</div>
+<div id="leg_wisata_minat" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Wisata Minat</div>
+    <div class="legend-item"><img src="legend/WisataMinat_4_01580.png"> 0 - 158</div>
+    <div class="legend-item"><img src="legend/WisataMinat_4_1584421.png"> 158 - 442</div>
+    <div class="legend-item"><img src="legend/WisataMinat_4_44213932.png"> 442 - 1393</div>
+    <div class="legend-item"><img src="legend/WisataMinat_4_139356623.png"> 1393 - 5662</div>
+    <div class="legend-item"><img src="legend/WisataMinat_4_5662446174.png"> 5662 - 44617</div>
+  </div>
+</div>
+<div id="leg_jalandesa" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Jalan Desa</div>
+    <div class="legend-item"><span class="legend-color" style="background: rgba(0,123,255,0.7)"></span> Jalan Desa</div>
+  </div>
+</div>
+<div id="leg_kecamatan" class="legend-kecamatan" style="display:none; margin-bottom:8px;">
+  <div class="legend-box">
+    <div class="legend-title-inside">Kecamatan (Jumlah Wisata)</div>
+    <div class="legend-item">
+      <span class="kec-color" style="background:rgba(215,25,28,0.7)"></span>
+      2 – 6
+    </div>
+    <div class="legend-item">
+      <span class="kec-color" style="background:rgba(253,174,97,0.7)"></span>
+      6 – 10
+    </div>
+    <div class="legend-item">
+      <span class="kec-color" style="background:rgba(255,255,192,0.7)"></span>
+      10 – 14
+    </div>
+    <div class="legend-item">
+      <span class="kec-color" style="background:rgba(166,217,106,0.7)"></span>
+      14 – 18
+    </div>
+    <div class="legend-item">
+      <span class="kec-color" style="background:rgba(26,150,65,0.7)"></span>
+      18 – 22
+    </div>
+  </div>
+</div>
+
+
+    </div>    
+
+        <!-- css selector untuk map leaflet -->
+        <div id="map"></div>
+        <!-- JS LIBRARIES -->
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet-search.js"></script>
+
+
+        <!-- DATA LAYER -->
+        <script src="data/Air_1.js"></script>
+        <script src="data/Jalandesa_2.js"></script>
+        <script src="data/Kecamatan_3.js"></script>
+        <script src="data/WisataMinat_4.js"></script>
+        <script src="data/WisataBudaya_5.js"></script>
+        <script src="data/WisataBuatan_6.js"></script>
+        <script src="data/WisataBahari_7.js"></script>
+        <script src="data/WisataAlam_8.js"></script>
+        <script src="data/DesaWisata_9.js"></script>
+        <script src="data/Jalanmerah_10.js"></script>
+        <script src="data/Jalurkereta_11.js"></script>
+
+        <!-- SCRIPT PETA -->
+        <script>
+        var highlightLayer;
+      function highlightFeature(e) {
+        highlightLayer = e.target;
+        if (
+          e.target.feature.geometry.type === "LineString" ||
+          e.target.feature.geometry.type === "MultiLineString"
+        ) {
+          highlightLayer.setStyle({
+            color: "#ffff00",
+          });
+        } else {
+          highlightLayer.setStyle({
+            fillColor: "#ffff00",
+            fillOpacity: 1,
+          });
+        }
+        highlightLayer.openPopup();
+      }
+        var map = L.map('map', {
+            zoomControl:false, maxZoom:28, minZoom:1, 
+                  }).fitBounds([
+        [-7.979572680037286, 109.8953591820834],
+        [-7.618815839887425, 110.4389430181463],
+      ]);
+
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+
+        // remove popup's row if "visible-with-data"
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        // modify popup if contains media
+        function addClassToPopupIfMedia(content, popup) {
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            var imgTd = tempDiv.querySelector('td img');
+            if (imgTd) {
+                var src = imgTd.getAttribute('src');
+                if (/\.(jpg|jpeg|png|gif|bmp|webp|avif)$/i.test(src)) {
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp3|wav|ogg|aac)$/i.test(src)) {
+                    var audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = src;
+                    imgTd.parentNode.replaceChild(audio, imgTd);
+                    popup._contentNode.classList.add('media');
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else if (/\.(mp4|webm|ogg|mov)$/i.test(src)) {
+                    var video = document.createElement('video');
+                    video.controls = true;
+                    video.src = src;
+                    video.style.width = "400px";
+                    video.style.height = "300px";
+                    video.style.maxHeight = "60vh";
+                    video.style.maxWidth = "60vw";
+                    imgTd.parentNode.replaceChild(video, imgTd);
+                    popup._contentNode.classList.add('media');
+                    // Aggiorna il popup quando il video carica i metadati
+                    video.addEventListener('loadedmetadata', function() {
+                        popup.update();
+                    });
+                    setTimeout(function() {
+                        popup.setContent(tempDiv.innerHTML);
+                        popup.update();
+                    }, 10);
+                } else {
+                    popup._contentNode.classList.remove('media');
+                }
+            } else {
+                popup._contentNode.classList.remove('media');
+            }
+        }
+
+        // ZOOM & MEASURE CONTROL
+        var zoomControl = L.control.zoom({
+            position: 'topleft'
+        }).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+
+        // BASEMAP
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+
+// PANEL INFORMASI
+function bukaPanel(html) {
+  var panel = document.getElementById("panel-info");
+  panel.style.display = "block";
+  document.getElementById("isi-panel-info").innerHTML = html;
+
+  // kasih class ke body -> map & instruksi geser
+  document.body.classList.add("panel-open");
+}
+
+function tutupPanel() {
+  var panel = document.getElementById("panel-info");
+  panel.style.display = "none";
+
+  // hapus class -> map & instruksi balik lagi normal
+  document.body.classList.remove("panel-open");
+}
+
+// flag: apakah user sudah nutup instruksi pakai X
+var instruksiDitutupManual = false;
+
+// ====== FUNGSI BARU: atur instruksi di atas peta ======
+function updateInstruksi() {
+  var box  = document.getElementById("instruksi-layer");
+  var text = document.getElementById("instruksi-text");
+
+// akses checkbox
+var desaWisata   = document.getElementById("desa_wisata");
+var wisataAlam   = document.getElementById("wisata_alam");
+var wisataBahari = document.getElementById("wisata_bahari");
+var wisataBuatan = document.getElementById("wisata_buatan");
+var wisataBudaya = document.getElementById("wisata_budaya");
+var wisataMinat  = document.getElementById("wisata_minat");
+var jalan        = document.getElementById("jalan");
+var aksesWisata  = document.getElementById("akses_wisata");
+var kecamatan    = document.getElementById("kecamatan");
+
+// cek apakah ada layer yang menampilkan info (klik / popup)
+var adaLayerInfo =
+  (desaWisata   && desaWisata.checked)   ||
+  (wisataAlam   && wisataAlam.checked)   ||
+  (wisataBahari && wisataBahari.checked) ||
+  (wisataBuatan && wisataBuatan.checked) ||
+  (wisataBudaya && wisataBudaya.checked) ||
+  (wisataMinat  && wisataMinat.checked)  ||
+  (jalan        && jalan.checked)        ||
+  (aksesWisata  && aksesWisata.checked)  ||
+  (kecamatan    && kecamatan.checked);
+
+  if (!adaLayerInfo) {
+    // kalau semua mati -> instruksi hilang
+    box.style.display = "none";
+    return;
+  }
+
+  // kalau sudah di-X, jangan paksa muncul lagi
+  if (instruksiDitutupManual) return;
+
+  // ada minimal satu checkbox ON -> tampilkan instruksi
+  box.style.display = "flex";
+  text.textContent =
+    "Klik salah satu wilayah kecamatan atau titik di peta untuk melihat informasi.";
+}
+// tombol X di panel instruksi
+var btnInstruksiClose = document.getElementById("instruksi-close");
+btnInstruksiClose.addEventListener("click", function () {
+  document.getElementById("instruksi-layer").style.display = "none";
+  instruksiDitutupManual = true; // jangan muncul lagi sampai halaman di-refresh
+});
+  /* ========== LAYER 1: wisata bahari ========== */
+        /* ========== LAYER 4: Wisata Minat ========== */
+        function pop_WisataMinat_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama_Tempa</th>\
+                        <td class="visible-with-data" id="Nama_Tempa">' + (feature.properties['Nama_Tempa'] !== null ? autolinker.link(String(feature.properties['Nama_Tempa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td class="visible-with-data" id="Alamat">' + (feature.properties['Alamat'] !== null ? autolinker.link(String(feature.properties['Alamat']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jenis_Wisa</th>\
+                        <td class="visible-with-data" id="Jenis_Wisa">' + (feature.properties['Jenis_Wisa'] !== null ? autolinker.link(String(feature.properties['Jenis_Wisa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nilai</th>\
+                        <td class="visible-with-data" id="Nilai">' + (feature.properties['Nilai'] !== null ? autolinker.link(String(feature.properties['Nilai']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jumlah_Pen</th>\
+                        <td class="visible-with-data" id="Jumlah_Pen">' + (feature.properties['Jumlah_Pen'] !== null ? autolinker.link(String(feature.properties['Jumlah_Pen']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+        /* ========== settingan Wisata Minat ========== */
+        function style_WisataMinat_4_0(feature) {
+            if (feature.properties['Skor'] >= 0.000000 && feature.properties['Skor'] <= 158.400000 ) {
+                return {
+                pane: 'pane_WisataMinat_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataMinat_4.svg',
+            iconSize: [11.399999999999999, 11.399999999999999]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 158.400000 && feature.properties['Skor'] <= 441.600000 ) {
+                return {
+                pane: 'pane_WisataMinat_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataMinat_4.svg',
+            iconSize: [15.2, 15.2]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 441.600000 && feature.properties['Skor'] <= 1393.200000 ) {
+                return {
+                pane: 'pane_WisataMinat_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataMinat_4.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 1393.200000 && feature.properties['Skor'] <= 5662.100000 ) {
+                return {
+                pane: 'pane_WisataMinat_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataMinat_4.svg',
+            iconSize: [22.799999999999997, 22.799999999999997]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 5662.100000 && feature.properties['Skor'] <= 44617.100000 ) {
+                return {
+                pane: 'pane_WisataMinat_4',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataMinat_4.svg',
+            iconSize: [26.599999999999998, 26.599999999999998]
+        }),
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_WisataMinat_4');
+        map.getPane('pane_WisataMinat_4').style.zIndex = 404;
+        map.getPane('pane_WisataMinat_4').style['mix-blend-mode'] = 'normal';
+        var layer_WisataMinat_4 = new L.geoJson(json_WisataMinat_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WisataMinat_4',
+            layerName: 'layer_WisataMinat_4',
+            pane: 'pane_WisataMinat_4',
+            onEachFeature: pop_WisataMinat_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_WisataMinat_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_WisataMinat_4);
+        
+        /* ========== LAYER 5: Wisata Budaya ========== */
+        function pop_WisataBudaya_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama_Tempa</th>\
+                        <td class="visible-with-data" id="Nama_Tempa">' + (feature.properties['Nama_Tempa'] !== null ? autolinker.link(String(feature.properties['Nama_Tempa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td class="visible-with-data" id="Alamat">' + (feature.properties['Alamat'] !== null ? autolinker.link(String(feature.properties['Alamat']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jenis_Wisa</th>\
+                        <td class="visible-with-data" id="Jenis_Wisa">' + (feature.properties['Jenis_Wisa'] !== null ? autolinker.link(String(feature.properties['Jenis_Wisa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nilai</th>\
+                        <td class="visible-with-data" id="Nilai">' + (feature.properties['Nilai'] !== null ? autolinker.link(String(feature.properties['Nilai']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jumlah_Pen</th>\
+                        <td class="visible-with-data" id="Jumlah_Pen">' + (feature.properties['Jumlah_Pen'] !== null ? autolinker.link(String(feature.properties['Jumlah_Pen']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+        /* ========== settingan Wisata Budaya ========== */
+        function style_WisataBudaya_5_0(feature) {
+            if (feature.properties['Skor'] >= 0.000000 && feature.properties['Skor'] <= 158.400000 ) {
+                return {
+                pane: 'pane_WisataBudaya_5',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBudaya_5.svg',
+            iconSize: [13.299999999999999, 13.299999999999999]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 158.400000 && feature.properties['Skor'] <= 441.600000 ) {
+                return {
+                pane: 'pane_WisataBudaya_5',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBudaya_5.svg',
+            iconSize: [17.099999999999998, 17.099999999999998]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 441.600000 && feature.properties['Skor'] <= 1393.200000 ) {
+                return {
+                pane: 'pane_WisataBudaya_5',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBudaya_5.svg',
+            iconSize: [20.9, 20.9]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 1393.200000 && feature.properties['Skor'] <= 5662.100000 ) {
+                return {
+                pane: 'pane_WisataBudaya_5',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBudaya_5.svg',
+            iconSize: [24.7, 24.7]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 5662.100000 && feature.properties['Skor'] <= 44617.100000 ) {
+                return {
+                pane: 'pane_WisataBudaya_5',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBudaya_5.svg',
+            iconSize: [28.5, 28.5]
+        }),
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_WisataBudaya_5');
+        map.getPane('pane_WisataBudaya_5').style.zIndex = 405;
+        map.getPane('pane_WisataBudaya_5').style['mix-blend-mode'] = 'normal';
+        var layer_WisataBudaya_5 = new L.geoJson(json_WisataBudaya_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WisataBudaya_5',
+            layerName: 'layer_WisataBudaya_5',
+            pane: 'pane_WisataBudaya_5',
+            onEachFeature: pop_WisataBudaya_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_WisataBudaya_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_WisataBudaya_5);
+        
+
+        /* ========== LAYER 5: Wisata buatan ========== */
+        function pop_WisataBuatan_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama_Tempa</th>\
+                        <td class="visible-with-data" id="Nama_Tempa">' + (feature.properties['Nama_Tempa'] !== null ? autolinker.link(String(feature.properties['Nama_Tempa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jenis_Wisa</th>\
+                        <td class="visible-with-data" id="Jenis_Wisa">' + (feature.properties['Jenis_Wisa'] !== null ? autolinker.link(String(feature.properties['Jenis_Wisa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nilai</th>\
+                        <td class="visible-with-data" id="Nilai">' + (feature.properties['Nilai'] !== null ? autolinker.link(String(feature.properties['Nilai']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jumlah_Pen</th>\
+                        <td class="visible-with-data" id="Jumlah_Pen">' + (feature.properties['Jumlah_Pen'] !== null ? autolinker.link(String(feature.properties['Jumlah_Pen']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        /* ========== settingan Wisata Buatan ========== */
+        function style_WisataBuatan_6_0(feature) {
+            if (feature.properties['Skor'] >= 0.000000 && feature.properties['Skor'] <= 158.400000 ) {
+                return {
+                pane: 'pane_WisataBuatan_6',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBuatan_6.svg',
+            iconSize: [11.399999999999999, 11.399999999999999]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 158.400000 && feature.properties['Skor'] <= 441.600000 ) {
+                return {
+                pane: 'pane_WisataBuatan_6',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBuatan_6.svg',
+            iconSize: [15.2, 15.2]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 441.600000 && feature.properties['Skor'] <= 1393.200000 ) {
+                return {
+                pane: 'pane_WisataBuatan_6',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBuatan_6.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 1393.200000 && feature.properties['Skor'] <= 5662.100000 ) {
+                return {
+                pane: 'pane_WisataBuatan_6',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBuatan_6.svg',
+            iconSize: [22.799999999999997, 22.799999999999997]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 5662.100000 && feature.properties['Skor'] <= 44617.100000 ) {
+                return {
+                pane: 'pane_WisataBuatan_6',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBuatan_6.svg',
+            iconSize: [26.599999999999998, 26.599999999999998]
+        }),
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_WisataBuatan_6');
+        map.getPane('pane_WisataBuatan_6').style.zIndex = 406;
+        map.getPane('pane_WisataBuatan_6').style['mix-blend-mode'] = 'normal';
+        var layer_WisataBuatan_6 = new L.geoJson(json_WisataBuatan_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WisataBuatan_6',
+            layerName: 'layer_WisataBuatan_6',
+            pane: 'pane_WisataBuatan_6',
+            onEachFeature: pop_WisataBuatan_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_WisataBuatan_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_WisataBuatan_6);
+        
+
+
+        /* ========== LAYER 6: Wisata bahari ========== */
+        function pop_WisataBahari_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama_Tempa</th>\
+                        <td class="visible-with-data" id="Nama_Tempa">' + (feature.properties['Nama_Tempa'] !== null ? autolinker.link(String(feature.properties['Nama_Tempa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td class="visible-with-data" id="Alamat">' + (feature.properties['Alamat'] !== null ? autolinker.link(String(feature.properties['Alamat']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jenis_Wisa</th>\
+                        <td class="visible-with-data" id="Jenis_Wisa">' + (feature.properties['Jenis_Wisa'] !== null ? autolinker.link(String(feature.properties['Jenis_Wisa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nilai</th>\
+                        <td class="visible-with-data" id="Nilai">' + (feature.properties['Nilai'] !== null ? autolinker.link(String(feature.properties['Nilai']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jumlah_Pen</th>\
+                        <td class="visible-with-data" id="Jumlah_Pen">' + (feature.properties['Jumlah_Pen'] !== null ? autolinker.link(String(feature.properties['Jumlah_Pen']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+
+        /* ========== settingan Wisata Bahari ========== */
+        function style_WisataBahari_7_0(feature) {
+            if (feature.properties['Skor'] >= 0.000000 && feature.properties['Skor'] <= 158.400000 ) {
+                return {
+                pane: 'pane_WisataBahari_7',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBahari_7.svg',
+            iconSize: [11.399999999999999, 11.399999999999999]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 158.400000 && feature.properties['Skor'] <= 441.600000 ) {
+                return {
+                pane: 'pane_WisataBahari_7',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBahari_7.svg',
+            iconSize: [15.2, 15.2]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 441.600000 && feature.properties['Skor'] <= 1393.200000 ) {
+                return {
+                pane: 'pane_WisataBahari_7',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBahari_7.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 1393.200000 && feature.properties['Skor'] <= 5662.100000 ) {
+                return {
+                pane: 'pane_WisataBahari_7',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBahari_7.svg',
+            iconSize: [22.799999999999997, 22.799999999999997]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 5662.100000 && feature.properties['Skor'] <= 44617.100000 ) {
+                return {
+                pane: 'pane_WisataBahari_7',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataBahari_7.svg',
+            iconSize: [26.599999999999998, 26.599999999999998]
+        }),
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_WisataBahari_7');
+        map.getPane('pane_WisataBahari_7').style.zIndex = 407;
+        map.getPane('pane_WisataBahari_7').style['mix-blend-mode'] = 'normal';
+        var layer_WisataBahari_7 = new L.geoJson(json_WisataBahari_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WisataBahari_7',
+            layerName: 'layer_WisataBahari_7',
+            pane: 'pane_WisataBahari_7',
+            onEachFeature: pop_WisataBahari_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_WisataBahari_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_WisataBahari_7);
+        
+
+        /* ========== LAYER 8: Wisata Alam ========== */
+        function pop_WisataAlam_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama_Tempa</th>\
+                        <td class="visible-with-data" id="Nama_Tempa">' + (feature.properties['Nama_Tempa'] !== null ? autolinker.link(String(feature.properties['Nama_Tempa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td class="visible-with-data" id="Alamat">' + (feature.properties['Alamat'] !== null ? autolinker.link(String(feature.properties['Alamat']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jenis_Wisa</th>\
+                        <td class="visible-with-data" id="Jenis_Wisa">' + (feature.properties['Jenis_Wisa'] !== null ? autolinker.link(String(feature.properties['Jenis_Wisa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nilai</th>\
+                        <td class="visible-with-data" id="Nilai">' + (feature.properties['Nilai'] !== null ? autolinker.link(String(feature.properties['Nilai']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jumlah_Pen</th>\
+                        <td class="visible-with-data" id="Jumlah_Pen">' + (feature.properties['Jumlah_Pen'] !== null ? autolinker.link(String(feature.properties['Jumlah_Pen']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_WisataAlam_8_0(feature) {
+            if (feature.properties['Skor'] >= 0.000000 && feature.properties['Skor'] <= 158.400000 ) {
+                return {
+                pane: 'pane_WisataAlam_8',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataAlam_8.svg',
+            iconSize: [15.2, 15.2]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 158.400000 && feature.properties['Skor'] <= 441.600000 ) {
+                return {
+                pane: 'pane_WisataAlam_8',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataAlam_8.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 441.600000 && feature.properties['Skor'] <= 1393.200000 ) {
+                return {
+                pane: 'pane_WisataAlam_8',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataAlam_8.svg',
+            iconSize: [22.799999999999997, 22.799999999999997]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 1393.200000 && feature.properties['Skor'] <= 5662.100000 ) {
+                return {
+                pane: 'pane_WisataAlam_8',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataAlam_8.svg',
+            iconSize: [26.599999999999998, 26.599999999999998]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 5662.100000 && feature.properties['Skor'] <= 44617.100000 ) {
+                return {
+                pane: 'pane_WisataAlam_8',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/WisataAlam_8.svg',
+            iconSize: [30.4, 30.4]
+        }),
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_WisataAlam_8');
+        map.getPane('pane_WisataAlam_8').style.zIndex = 408;
+        map.getPane('pane_WisataAlam_8').style['mix-blend-mode'] = 'normal';
+        var layer_WisataAlam_8 = new L.geoJson(json_WisataAlam_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_WisataAlam_8',
+            layerName: 'layer_WisataAlam_8',
+            pane: 'pane_WisataAlam_8',
+            onEachFeature: pop_WisataAlam_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_WisataAlam_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_WisataAlam_8);
+        
+
+        /* ========== LAYER 9: Desa Wisata ========== */
+        function pop_DesaWisata_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nama_Tempa</th>\
+                        <td class="visible-with-data" id="Nama_Tempa">' + (feature.properties['Nama_Tempa'] !== null ? autolinker.link(String(feature.properties['Nama_Tempa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Alamat</th>\
+                        <td class="visible-with-data" id="Alamat">' + (feature.properties['Alamat'] !== null ? autolinker.link(String(feature.properties['Alamat']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jenis_Wisa</th>\
+                        <td class="visible-with-data" id="Jenis_Wisa">' + (feature.properties['Jenis_Wisa'] !== null ? autolinker.link(String(feature.properties['Jenis_Wisa']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Nilai</th>\
+                        <td class="visible-with-data" id="Nilai">' + (feature.properties['Nilai'] !== null ? autolinker.link(String(feature.properties['Nilai']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jumlah_Pen</th>\
+                        <td class="visible-with-data" id="Jumlah_Pen">' + (feature.properties['Jumlah_Pen'] !== null ? autolinker.link(String(feature.properties['Jumlah_Pen']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_DesaWisata_9_0(feature) {
+            if (feature.properties['Skor'] >= 0.000000 && feature.properties['Skor'] <= 158.400000 ) {
+                return {
+                pane: 'pane_DesaWisata_9',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/DesaWisata_9.svg',
+            iconSize: [11.399999999999999, 11.399999999999999]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 158.400000 && feature.properties['Skor'] <= 441.600000 ) {
+                return {
+                pane: 'pane_DesaWisata_9',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/DesaWisata_9.svg',
+            iconSize: [14.25, 14.25]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 441.600000 && feature.properties['Skor'] <= 1393.200000 ) {
+                return {
+                pane: 'pane_DesaWisata_9',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/DesaWisata_9.svg',
+            iconSize: [17.099999999999998, 17.099999999999998]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 1393.200000 && feature.properties['Skor'] <= 5662.100000 ) {
+                return {
+                pane: 'pane_DesaWisata_9',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/DesaWisata_9.svg',
+            iconSize: [19.95, 19.95]
+        }),
+                interactive: true,
+            }
+            }
+            if (feature.properties['Skor'] >= 5662.100000 && feature.properties['Skor'] <= 44617.100000 ) {
+                return {
+                pane: 'pane_DesaWisata_9',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/DesaWisata_9.svg',
+            iconSize: [22.799999999999997, 22.799999999999997]
+        }),
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_DesaWisata_9');
+        map.getPane('pane_DesaWisata_9').style.zIndex = 409;
+        map.getPane('pane_DesaWisata_9').style['mix-blend-mode'] = 'normal';
+        var layer_DesaWisata_9 = new L.geoJson(json_DesaWisata_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_DesaWisata_9',
+            layerName: 'layer_DesaWisata_9',
+            pane: 'pane_DesaWisata_9',
+            onEachFeature: pop_DesaWisata_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_DesaWisata_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_DesaWisata_9);
+        
+
+            /* ========== LAYER 2: jalan desa ========== */
+function pop_Jalandesa(feature, layer) {
+    var popupContent = `
+        <table class="popup-table">
+            <tr>
+                <th>OSM ID</th>
+                <td>${feature.properties['osm_id'] ?? '-'}</td>
+            </tr>
+            <tr>
+                <th>Nama Jalan</th>
+                <td>${feature.properties['name'] ?? '-'}</td>
+            </tr>
+            <tr>
+                <th>Kategori Jalan</th>
+                <td>${feature.properties['highway'] ?? '-'}</td>
+            </tr>
+        </table>`;
+            //ini gatau dah dihapus apa gak
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 410 });
+        }
+            //========================================
+function style_Jalandesa(feature) {
+    return { pane: 'pane_Jalandesa_2', color: '#007bff', weight: 2, fill: false, interactive: true };
+}
+
+        map.createPane('pane_Jalandesa_2');
+        map.getPane('pane_Jalandesa_2').style.zIndex = 420;
+        map.getPane('pane_Jalandesa_2').style['mix-blend-mode'] = 'normal';
+        
+        var layer_Jalandesa_2 = new L.geoJson(json_Jalandesa_2, {
+            attribution: '',
+            interactive: true,
+            pane: 'pane_Jalandesa_2',
+            onEachFeature: pop_Jalandesa,
+            style: style_Jalandesa
+        });
+        console.log("Jalan Desa layer:", layer_Jalandesa_2);
+        bounds_group.addLayer(layer_Jalandesa_2);
+
+//         // ===== Checkbox toggle legend JALAN DESA =====
+// var cbJalandesa = document.getElementById("cb_jalandesa");
+// var legJalandesa = document.getElementById("leg_jalandesa");
+
+// cbJalandesa.addEventListener("change", function () {
+//     if (this.checked) {
+//         map.addLayer(layer_Jalandesa_2);
+//         legJalandesa.style.display = "block";
+//     } else {
+//         map.removeLayer(layer_Jalandesa_2);
+//         legJalandesa.style.display = "none";
+//     }
+// });
+
+/* ===== LAYER 3: Kecamatan ===== */
+function pop_Kecamatan_3(feature, layer) {
+    var popupContent = `
+        <table>
+            <tr><td colspan="2">${feature.properties['WADMKC'] || ''}</td></tr>
+            <tr><td colspan="2">${feature.properties['WADMKK'] || ''}</td></tr>
+            <tr><td colspan="2">${feature.properties['WADMPR'] || ''}</td></tr>
+            <tr><td colspan="2">${feature.properties['Jml_Wis'] || ''}</td></tr>
+        </table>`;
+    var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+    layer.on('popupopen', function(e) { addClassToPopupIfMedia(content, e.popup); });
+    layer.bindPopup(content, { maxHeight: 400 });
+}
+
+function style_Kecamatan_3_0(feature) {
+    var v = feature.properties['Jml_Wis'];
+    if (v >= 2 && v <= 6)   return { pane:'pane_Kecamatan_3', fillColor:'rgba(215,25,28,0.7)', color:'#232323', weight:1, fill:true, fillOpacity:1, interactive:true };
+    if (v > 6 && v <= 10)  return { pane:'pane_Kecamatan_3', fillColor:'rgba(253,174,97,0.7)', color:'#232323', weight:1, fill:true, fillOpacity:1, interactive:true };
+    if (v > 10 && v <= 14) return { pane:'pane_Kecamatan_3', fillColor:'rgba(255,255,192,0.7)', color:'#232323', weight:1, fill:true, fillOpacity:1, interactive:true };
+    if (v > 14 && v <= 18) return { pane:'pane_Kecamatan_3', fillColor:'rgba(166,217,106,0.7)', color:'#232323', weight:1, fill:true, fillOpacity:1, interactive:true };
+    if (v > 18 && v <= 22) return { pane:'pane_Kecamatan_3', fillColor:'rgba(26,150,65,0.7)',  color:'#232323', weight:1, fill:true, fillOpacity:1, interactive:true };
+}
+
+// Buat pane khusus Kecamatan
+map.createPane('pane_Kecamatan_3');
+map.getPane('pane_Kecamatan_3').style.zIndex = 401;
+map.getPane('pane_Kecamatan_3').style['mix-blend-mode'] = 'normal';
+
+// Buat layer GeoJSON
+var layer_Kecamatan_3 = new L.geoJson(json_Kecamatan_3, {
+    attribution: '',
+    interactive: true,
+    pane: 'pane_Kecamatan_3',
+    onEachFeature: pop_Kecamatan_3,
+    style: style_Kecamatan_3_0
+});
+
+// Tambahkan ke bounds group dan peta
+bounds_group.addLayer(layer_Kecamatan_3);
+
+
+// ===== Checkbox toggle legend =====
+var cbKecamatan = document.getElementById("cb_kecamatan");
+var legKecamatan = document.getElementById("leg_kecamatan");
+cbKecamatan.addEventListener("change", function() {
+    if (this.checked) {
+        map.addLayer(layer_Kecamatan_3);
+        legKecamatan.style.display = "block";
+    } else {
+        map.removeLayer(layer_Kecamatan_3);
+        legKecamatan.style.display = "none";
+    }
+});
+
+        // ========== PHOTON SEARCH CONTROL ==========
+        const url = {"Nominatim OSM": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&",
+        "France BAN": "https://api-adresse.data.gouv.fr/search/?"}
+        var photonControl = L.control.photon({
+            url: url["Nominatim OSM"],
+            feedbackLabel: '',
+            position: 'topleft',
+            includePosition: true,
+            initial: true,
+            // resultsHandler: myHandler,
+        }).addTo(map);
+        photonControl._container.childNodes[0].style.borderRadius="10px"
+        // Create a variable to store the geoJSON data
+        var x = null;
+        // Create a variable to store the marker
+        var marker = null;
+        // Add an event listener to the Photon control to create a marker from the returned geoJSON data
+        var z = null;
+        photonControl.on('selected', function(e) {
+            console.log(photonControl.search.resultsContainer);
+            if (x != null) {
+                map.removeLayer(obj3.marker);
+                map.removeLayer(x);
+            }
+            obj2.gcd = e.choice;
+            x = L.geoJSON(obj2.gcd).addTo(map);
+            var label = typeof obj2.gcd.properties.label === 'undefined' ? obj2.gcd.properties.display_name : obj2.gcd.properties.label;
+            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
+            map.setView(x.getLayers()[0].getLatLng(), 17);
+            z = typeof e.choice.properties.label === 'undefined'? e.choice.properties.display_name : e.choice.properties.label;
+            console.log(e);
+            e.target.input.value = z;
+        });
+        var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
+        search.classList.add("leaflet-control-search")
+        search.style.display = "flex";
+        search.style.backgroundColor="rgba(255,255,255,0.5)" 
+
+        // Create the new button element
+        var button = document.createElement("div");
+        button.id = "gcd-button-control";
+        button.className = "gcd-gl-btn fa fa-search search-button";
+
+        // Insert the button at the beginning of the search control
+        search.insertBefore(button, search.firstChild);
+        last = search.lastChild;
+        last.style.display = "none";
+        button.addEventListener("click", function (e) {
+            if (last.style.display === "none") {
+                last.style.display = "block";
+            } else {
+                last.style.display = "none";
+            }
+        });
+        // // ======= LAYER CONTROL =======
+        // var overlaysTree = [
+        //     {label: '<img src="legend/Jalurkereta_11.png" /> Jalurkereta', layer: layer_Jalurkereta_11},
+        //     {label: '<img src="legend/Jalanmerah_10.png" /> Jalanmerah', layer: layer_Jalanmerah_10},
+        //     {label: 'DesaWisata<br /><table><tr><td style="text-align: center;"><img src="legend/DesaWisata_9_01580.png" /></td><td>0 - 158</td></tr><tr><td style="text-align: center;"><img src="legend/DesaWisata_9_1584421.png" /></td><td>158 - 442</td></tr><tr><td style="text-align: center;"><img src="legend/DesaWisata_9_44213932.png" /></td><td>442 - 1393</td></tr><tr><td style="text-align: center;"><img src="legend/DesaWisata_9_139356623.png" /></td><td>1393 - 5662</td></tr><tr><td style="text-align: center;"><img src="legend/DesaWisata_9_5662446174.png" /></td><td>5662 - 44617</td></tr></table>', layer: layer_DesaWisata_9},
+        //     {label: 'WisataAlam<br /><table><tr><td style="text-align: center;"><img src="legend/WisataAlam_8_01580.png" /></td><td>0 - 158</td></tr><tr><td style="text-align: center;"><img src="legend/WisataAlam_8_1584421.png" /></td><td>158 - 442</td></tr><tr><td style="text-align: center;"><img src="legend/WisataAlam_8_44213932.png" /></td><td>442 - 1393</td></tr><tr><td style="text-align: center;"><img src="legend/WisataAlam_8_139356623.png" /></td><td>1393 - 5662</td></tr><tr><td style="text-align: center;"><img src="legend/WisataAlam_8_5662446174.png" /></td><td>5662 - 44617</td></tr></table>', layer: layer_WisataAlam_8},
+        //     {label: 'WisataBahari<br /><table><tr><td style="text-align: center;"><img src="legend/WisataBahari_7_01580.png" /></td><td>0 - 158</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBahari_7_1584421.png" /></td><td>158 - 442</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBahari_7_44213932.png" /></td><td>442 - 1393</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBahari_7_139356623.png" /></td><td>1393 - 5662</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBahari_7_5662446174.png" /></td><td>5662 - 44617</td></tr></table>', layer: layer_WisataBahari_7},
+        //     {label: 'WisataBuatan<br /><table><tr><td style="text-align: center;"><img src="legend/WisataBuatan_6_01580.png" /></td><td>0 - 158</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBuatan_6_1584421.png" /></td><td>158 - 442</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBuatan_6_44213932.png" /></td><td>442 - 1393</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBuatan_6_139356623.png" /></td><td>1393 - 5662</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBuatan_6_5662446174.png" /></td><td>5662 - 44617</td></tr></table>', layer: layer_WisataBuatan_6},
+        //     {label: 'WisataBudaya<br /><table><tr><td style="text-align: center;"><img src="legend/WisataBudaya_5_394839480.png" /></td><td>394.8 - 394.8</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBudaya_5_394839481.png" /></td><td>394.8 - 394.8</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBudaya_5_394839482.png" /></td><td>394.8 - 394.8</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBudaya_5_394839483.png" /></td><td>394.8 - 394.8</td></tr><tr><td style="text-align: center;"><img src="legend/WisataBudaya_5_394839484.png" /></td><td>394.8 - 394.8</td></tr></table>', layer: layer_WisataBudaya_5},
+        //     {label: 'WisataMinat<br /><table><tr><td style="text-align: center;"><img src="legend/WisataMinat_4_01580.png" /></td><td>0 - 158</td></tr><tr><td style="text-align: center;"><img src="legend/WisataMinat_4_1584421.png" /></td><td>158 - 442</td></tr><tr><td style="text-align: center;"><img src="legend/WisataMinat_4_44213932.png" /></td><td>442 - 1393</td></tr><tr><td style="text-align: center;"><img src="legend/WisataMinat_4_139356623.png" /></td><td>1393 - 5662</td></tr><tr><td style="text-align: center;"><img src="legend/WisataMinat_4_5662446174.png" /></td><td>5662 - 44617</td></tr></table>', layer: layer_WisataMinat_4},
+        //     {label: 'Kecamatan<br /><table><tr><td style="text-align: center;"><img src="legend/Kecamatan_3_260.png" /></td><td>2 - 6</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_3_6101.png" /></td><td>6 - 10</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_3_10142.png" /></td><td>10 - 14</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_3_14183.png" /></td><td>14 - 18</td></tr><tr><td style="text-align: center;"><img src="legend/Kecamatan_3_18224.png" /></td><td>18 - 22</td></tr></table>', layer: layer_Kecamatan_3},
+        //     {label: '<img src="legend/Jalandesa_2.png" /> Jalandesa', layer: layer_Jalandesa_2},
+        //     {label: '<img src="legend/Air_1.png" /> Air', layer: layer_Air_1},
+        //     {label: "OSM Standard", layer: layer_OSMStandard_0, radioGroup: 'bm' },]
+        // var lay = L.control.layers.tree(null, overlaysTree,{
+        //     //namedToggle: true,
+        //     //selectorBack: false,
+        //     //closedSymbol: '&#8862; &#x1f5c0;',
+        //     //openedSymbol: '&#8863; &#x1f5c1;',
+        //     //collapseAll: 'Collapse all',
+        //     //expandAll: 'Expand all',
+        //     collapsed: true,
+        // });
+        // lay.addTo(map);
+
+        // { label: 'Wisata Bahari', layer: layer_WisataBahari_7 },
+        // { label: 'Wisata Buatan', layer: layer_WisataBuatan_6 },
+        // { label: 'Desa Wisata', layer: layer_DesaWisata_9 },
+        // { label: 'Wisata Alam', layer: layer_WisataAlam_8 },
+        // { label: 'Wisata Budaya', layer: layer_WisataBudaya_5 },
+        // { label: 'Wisata Minat', layer: layer_WisataMinat_4 },
+        // ========== LABEL KECAMATAN ==========
+        setBounds();
+        var i = 0;
+        layer_Kecamatan_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+           // layer.bindTooltip((layer.feature.properties['Jml_Wis'] !== null?String('<div style="color: #000000; font-size: 19pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['Jml_Wis']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Kecamatan_3'});
+           // labels.push(layer);
+           // totalMarkers += 1;
+
+           //   addLabel(layer, i);
+           //   i++;
+        });
+        resetLabels([layer_Kecamatan_3]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Kecamatan_3]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Kecamatan_3]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Kecamatan_3]);
+        });
+        setBounds();
+        // ========== LABEL JALAN DESA ==========
+var i = 0;
+layer_Jalandesa_2.eachLayer(function(layer) {
+    var context = {
+        feature: layer.feature,
+        variables: {}
+    };
+
+    // Contoh tooltip (jika nanti ingin diaktifkan)
+    // layer.bindTooltip(
+    //     (layer.feature.properties['name'] !== null ?
+    //     '<div style="color:#000000; font-size:12pt; font-family: Arial, sans-serif;">'
+    //     + layer.feature.properties['name'] + '</div>' : ''),
+    //     { permanent: false, offset: [0, -10], className: 'css_Jalandesa_2' }
+    // );
+
+    // labels.push(layer);
+    // totalMarkers += 1;
+    // addLabel(layer, i);
+    // i++;
+});
+
+resetLabels([layer_Jalandesa_2]);
+
+map.on("zoomend", function(){
+    resetLabels([layer_Jalandesa_2]);
+});
+map.on("layeradd", function(){
+    resetLabels([layer_Jalandesa_2]);
+});
+map.on("layerremove", function(){
+    resetLabels([layer_Jalandesa_2]);
+});
+
+        // Checkbox
+            var cbDesaWisata   = document.getElementById("cb_desa_wisata");
+            var cbWisataAlam   = document.getElementById("cb_wisata_alam");
+            var cbWisataBahari = document.getElementById("cb_wisata_bahari");
+            var cbWisataBuatan = document.getElementById("cb_wisata_buatan");
+            var cbWisataBudaya = document.getElementById("cb_wisata_budaya");
+            var cbWisataMinat  = document.getElementById("cb_wisata_minat");
+            var cbJalanDesa    = document.getElementById("cb_jalandesa");
+            var cbKecamatan    = document.getElementById("cb_kecamatan");
+
+        // Legenda
+            var legDesaWisata   = document.getElementById("leg_desa_wisata");
+            var legWisataAlam   = document.getElementById("leg_wisata_alam");
+            var legWisataBahari = document.getElementById("leg_wisata_bahari");
+            var legWisataBuatan = document.getElementById("leg_wisata_buatan");
+            var legWisataBudaya = document.getElementById("leg_wisata_budaya");
+            var legWisataMinat  = document.getElementById("leg_wisata_minat");
+            var legJalanDesa    = document.getElementById("leg_jalandesa");
+            var legKecamatan    = document.getElementById("leg_kecamatan");
+
+        // Instruksi
+            var instruksiBox = document.getElementById("instruksi-layer");
+
+        // ===== KONDISI AWAL: SEMUA OFF =====
+            [
+            cbDesaWisata, cbWisataAlam, cbWisataBahari,
+            cbWisataBuatan, cbWisataBudaya, cbWisataMinat,
+            cbJalanDesa, cbKecamatan
+            ].forEach(cb => cb && (cb.checked = false));
+
+            map.removeLayer(layer_DesaWisata_9);
+            map.removeLayer(layer_WisataAlam_8);
+            map.removeLayer(layer_WisataBahari_7);
+            map.removeLayer(layer_WisataBuatan_6);
+            map.removeLayer(layer_WisataBudaya_5);
+            map.removeLayer(layer_WisataMinat_4);
+            map.removeLayer(layer_Jalandesa_2);
+            map.removeLayer(layer_Kecamatan_3);
+
+
+            [
+            legDesaWisata, legWisataAlam, legWisataBahari,
+            legWisataBuatan, legWisataBudaya, legWisataMinat,
+            legJalanDesa, legKecamatan
+            ].forEach(lg => lg && (lg.style.display = "none"));
+
+            if (instruksiBox) instruksiBox.style.display = "none";
+
+        // ===== FUNGSI INSTRUKSI =====
+            function updateInstruksi() {
+            if (!instruksiBox) return;
+
+            var adaLayerInfo =
+                cbDesaWisata.checked ||
+                cbWisataAlam.checked ||
+                cbWisataBahari.checked ||
+                cbWisataBuatan.checked ||
+                cbWisataBudaya.checked ||
+                cbWisataMinat.checked ||
+                cbJalanDesa.checked ||
+                cbKecamatan.checked;
+
+            instruksiBox.style.display = adaLayerInfo ? "flex" : "none";
+            }
+
+        // ===== HANDLER CHECKBOX =====
+            function toggleLayer(cb, layer, legend) {
+            if (!cb) return;   // ⬅️ TAMBAHAN WAJIB
+
+            cb.addEventListener("change", function () {
+                if (this.checked) {
+                map.addLayer(layer);
+                if (legend) legend.style.display = "block";
+                } else {
+                map.removeLayer(layer);
+                if (legend) legend.style.display = "none";
+                }
+                updateInstruksi();
+            });
+            }
+
+            toggleLayer(cbDesaWisata,   layer_DesaWisata_9,   legDesaWisata);
+            toggleLayer(cbWisataAlam,   layer_WisataAlam_8,   legWisataAlam);
+            toggleLayer(cbWisataBahari, layer_WisataBahari_7, legWisataBahari);
+            toggleLayer(cbWisataBuatan, layer_WisataBuatan_6, legWisataBuatan);
+            toggleLayer(cbWisataBudaya, layer_WisataBudaya_5, legWisataBudaya);
+            toggleLayer(cbWisataMinat,  layer_WisataMinat_4,  legWisataMinat);
+            toggleLayer(cbJalanDesa,    layer_Jalandesa_2,    legJalanDesa);
+            toggleLayer(cbKecamatan,    layer_Kecamatan_3,    legKecamatan);
+        </script>        
+    </body>
+</html>

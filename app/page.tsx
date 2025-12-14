@@ -126,7 +126,7 @@ export default function Home() {
             </Link>
 
             <Link
-              href="/Map"
+              href="/qgis_eko"
               className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight ms-2"
             >
               Peta Ekonomi
@@ -166,7 +166,7 @@ export default function Home() {
             </Link>
 
             <Link
-              href="/Map"
+              href="/qgis_parwi"
               className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight ms-2"
             >
               Peta Pariwisata
