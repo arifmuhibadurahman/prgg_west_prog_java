@@ -2,31 +2,58 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { MapPin, ArrowRight } from "lucide-react";
 
 const pariwisataList = [
   {
-    nama: "Pantai Glagah",
-    gambar: "/images/1.jpg",
+    nama: "Bendungan Kayangan",
+    gambar: "/assets/Bendungan-Kayangan.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Bendungan+Kayangan+Kulon+Progo",
   },
   {
-    nama: "Desa Wisata Gamplong",
-    gambar: "/images/2.jpg",
+    nama: "Bukit Ngisis",
+    gambar: "/assets/bukit_ngisis.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Bukit+Ngisis+Kulon+Progo",
+  },
+  {
+    nama: "Grojogan Watu Jonggol",
+    gambar: "/assets/Grojogan_Watu_Jonggol.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Grojogan+Watu+Jonggol+Kulon+Progo",
+  },
+  {
+    nama: "Gunung Jaran",
+    gambar: "/assets/gunung_jaran.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Gunung+Jaran+Kulon+Progo",
+  },
+  {
+    nama: "Hutan Pinus",
+    gambar: "/assets/hutan_pinus.png",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Hutan+Pinus+Kulon+Progo",
   },
   {
     nama: "Kebun Teh Nglinggo",
-    gambar: "/images/3.jpg",
+    gambar: "/assets/kebun_teh_nglinggo.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Kebun+Teh+Nglinggo+Kulon+Progo",
   },
   {
-    nama: "Wisata Kalibiru",
-    gambar: "/images/4.jpg",
+    nama: "Kedung Pedut",
+    gambar: "/assets/Kedung-Pedut.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Kedung+Pedut+Kulon+Progo",
   },
   {
-    nama: "Waduk Sermo",
-    gambar: "/images/5.jpg",
+    nama: "Puncak Widosari",
+    gambar: "/assets/Puncak_Widosari.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Puncak+Widosari+Kulon+Progo",
   },
   {
-    nama: "Air Terjun Kembang",
-    gambar: "/images/6.jpg",
+    nama: "Puncak Suroloyo",
+    gambar: "/assets/Puncak-Suroloyo.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Puncak+Suroloyo+Kulon+Progo",
+  },
+  {
+    nama: "Wisata Alam Kalibiru",
+    gambar: "/assets/Wisata-Alam-Kalibiru.jpg",
+    gmaps: "https://www.google.com/maps/search/?api=1&query=Kalibiru+Kulon+Progo",
   },
 ];
 
@@ -39,28 +66,70 @@ export default function PariwisataPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {pariwisataList.map((item, index) => (
-          <motion.div
+          <a
             key={index}
-            whileHover={{ scale: 1.05 }}
-            className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
+            href={item.gmaps}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
           >
-            <Image
-              src={item.gambar}
-              alt={item.nama}
-              width={600}
-              height={400}
-              className="object-cover w-full h-48"
-            />
-            <div className="p-4 text-center">
-              <h2 className="text-lg font-semibold text-gray-800">{item.nama}</h2>
-            </div>
-          </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer"
+            >
+              <Image
+                src={item.gambar}
+                alt={item.nama}
+                width={600}
+                height={400}
+                className="object-cover w-full h-48"
+              />
+              <div className="p-4 text-center">
+                <h2 className="text-lg font-semibold text-gray-800">
+                  {item.nama}
+                </h2>
+                  <motion.div
+                    className="mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-full 
+                              bg-gradient-to-r from-blue-500 to-sky-400 text-white text-sm font-medium
+                              shadow-md"
+                    animate={{ y: [0, -3, 0] }}
+                    transition={{ duration: 1.8, repeat: Infinity }}
+                  >
+                    <MapPin size={16} />
+                    Lihat Lokasi
+                    <motion.span
+                      initial={{ x: 0 }}
+                      whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <ArrowRight size={14} />
+                    </motion.span>
+                  </motion.div>
+
+              </div>
+            </motion.div>
+          </a>
         ))}
       </div>
 
       <p className="text-center mt-12 text-gray-600">
-        🌿 Dukung produk lokal dan wisata Kabupaten Kulon Prog untuk ekonomi berkelanjutan.
+        🌿 Dukung produk lokal dan wisata Kabupaten Kulon Progo untuk ekonomi berkelanjutan.
+      </p>
+          <div className="mt-6 flex flex-col items-center justify-center text-center gap-2 opacity-80">
+      <Image
+        src="/dispar_jogja.png"
+        alt="Dinas Pariwisata Daerah Istimewa Yogyakarta"
+        width={120}
+        height={60}
+        className="object-contain"
+      />
+      <p className="text-sm text-gray-500">
+        Sumber Referensi: <span className="font-medium">
+          Dinas Pariwisata Daerah Istimewa Yogyakarta
+        </span>
       </p>
     </div>
+    </div>
+    
   );
 }
