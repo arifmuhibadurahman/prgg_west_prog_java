@@ -2,11 +2,214 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global behavior */
 html, body {
   scroll-behavior: smooth;
 }
 
+/* Global section spacing */
 section {
   padding-top: 60px;
   padding-bottom: 60px;
 }
+
+
+
+    .counter {
+        padding: 0.75rem 0;
+    }
+    
+    .counter h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0;
+        min-width: 100px;
+    }
+    
+    .counter .fs-5 {
+        font-size: 1.1rem !important;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    
+    .counter .fs-6 {
+        font-size: 0.95rem !important;
+        font-weight: 400;
+    }
+
+        .section-with-bg {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .section-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        z-index: -1;
+        opacity: 0.15;
+    }
+    
+    .section-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Background khusus untuk section Latar Belakang */
+    .latarbelakang-bg {
+        background-image: url('/landing/img/bg-latarbelakang.jpg');
+    }
+
+        /* Background khusus untuk section Potensi */
+    .potensi-bg {
+        background-image: url('/landing/img/bg-potensi.jpg');
+    }
+
+        /* Team Section Custom Styles */
+    .team-member-supervisor {
+        position: relative;
+        padding: 2rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        border: 2px solid #6c757d;
+    }
+
+    .supervisor-badge {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #6c757d;
+        color: white;
+        padding: 5px 20px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 5px rgba(108,117,125,0.3);
+    }
+
+    .supervisor-img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border: 4px solid #6c757d;
+        box-shadow: 0 5px 15px rgba(108,117,125,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .supervisor-img:hover {
+        transform: scale(1.05);
+    }
+
+    .student-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border: 3px solid #6c757d;
+        box-shadow: 0 3px 10px rgba(108,117,125,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .student-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(108,117,125,0.3);
+    }
+
+    .team-member {
+        padding: 1.5rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .team-member:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .team-divider {
+        position: relative;
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    .team-divider::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 0px;
+        background: transparent;
+    }
+
+    .team-divider span {
+        background: white;
+        padding: 0 2rem;
+        color: #000000;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 1.1rem;
+    }
+
+    .team-member h4 {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .team-member p.text-muted {
+        margin-bottom: 0.25rem;
+        font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .supervisor-img {
+            width: 150px;
+            height: 150px;
+        }
+        
+        .student-img {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .team-member {
+            margin-bottom: 2rem;
+        }
+        
+        .team-divider span {
+            padding: 0 1rem;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .supervisor-img {
+            width: 130px;
+            height: 130px;
+        }
+        
+        .student-img {
+            width: 100px;
+            height: 100px;
+        }
+        
+        .team-member h4 {
+            font-size: 1.1rem;
+        }
+        
+        .team-member p.text-muted {
+            font-size: 0.8rem;
+        }
+    }

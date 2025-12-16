@@ -3,6 +3,8 @@ import Script from "next/script";
 import Link from "next/link";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { ubuntu } from "@/app/fonts";
+
 
 export default function Home() {
 {/* SPINNER */}
@@ -52,11 +54,12 @@ export default function Home() {
         <div className="container d-flex align-items-center justify-content-between py-2">
           
           {/* Logo */}
-          <Link href="/" className="text-white text-decoration-none d-flex align-items-center">
-            <h1 className="fw-bold m-0">
-              PRGG<span className="text-secondary">2025</span>
-            </h1>
-          </Link>
+
+        <Link href="/" className="text-white text-decoration-none d-flex align-items-center">
+        <h1 className={`${ubuntu.className} fw-bold m-0`}>
+            PRGG <span className="text-secondary"> 2025</span>
+        </h1>
+        </Link>
 
           {/* Navbar links */}
           <div className="d-flex align-items-center gap-3">
@@ -75,11 +78,11 @@ export default function Home() {
       </div>
       {/* ========================================== */}
 
-      {/* Main content */}
+      {/* Main content 
       <div style={{ paddingTop: "80px" }}>
-        {/* isi halaman utama di sini */}
         <h2>Selamat datang di PRGG 2025</h2>
       </div>
+      */}
     </div>
 
 {/* ================= Carousel Start ================= */}
@@ -293,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 */}
-{/* CSS untuk ukuran yang tepat */}
+{/* CSS untuk ukuran yang tepat 
 <style jsx>{`
     .counter {
         padding: 0.75rem 0;
@@ -317,6 +320,9 @@ document.addEventListener('DOMContentLoaded', function() {
         font-weight: 400;
     }
 `}</style>
+*/}
+
+
 
         {/* About Start - Diubah menjadi Latar Belakang dengan Background */}
 <div id="latar-belakang" className="container-fluid py-4 section-with-bg">
@@ -425,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 
-{/* CSS untuk Background Sections */}
+{/* CSS untuk Background Sections
 <style jsx>{`
     .section-with-bg {
         position: relative;
@@ -450,11 +456,12 @@ document.addEventListener('DOMContentLoaded', function() {
         z-index: 1;
     }
     
-    /* Background khusus untuk section Latar Belakang */
+
     .latarbelakang-bg {
         background-image: url('/landing/img/bg-latarbelakang.jpg');
     }
-`}</style>
+`}</style> */}
+
 {/* About End */}
 
         {/* Services Start - Diubah menjadi Potensi dengan Background */}
@@ -599,13 +606,13 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 
-{/* CSS untuk Background Potensi */}
+{/* CSS untuk Background Potensi
 <style jsx>{`
-    /* Background khusus untuk section Potensi */
     .potensi-bg {
         background-image: url('/landing/img/bg-potensi.jpg');
     }
 `}</style>
+ */}
 {/* Services End */}
         {/* Team*/}
 <section id="tentang-kami" className="page-section bg-light">
@@ -677,9 +684,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </section>
-
+ {/* CSS untuk Background Sections 
 <style jsx>{`
-    /* Team Section Custom Styles */
+    
     .team-member-supervisor {
         position: relative;
         padding: 2rem;
@@ -781,7 +788,7 @@ document.addEventListener('DOMContentLoaded', function() {
         font-size: 0.9rem;
     }
 
-    /* Responsive Design */
+
     @media (max-width: 768px) {
         .supervisor-img {
             width: 150px;
@@ -823,6 +830,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 `}</style>
+*/}
+
 
         {/* Contact Start */}
         <div id="komentar" className="container-fluid py-5 mb-5">
@@ -885,12 +894,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         <hr className="text-light mt-3.5 mb-3.5"/>
         
-        {/* Copyright */}
+        {/* Copyright 
         <div className="row">
             <div className="col-12 text-center">
                 <span className="text-white">Copyright <i className="fas fa-copyright me-1"></i> PRGG 2025 - Teknik Geodesi UGM</span>
             </div>
         </div>
+          */}
     </div>
 </div>
 {/* Footer End */}
