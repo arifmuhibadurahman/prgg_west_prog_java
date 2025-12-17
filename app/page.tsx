@@ -140,6 +140,53 @@ export default function Home() {
             >
               Grafik Jumlah Pengunjung
             </Link>
+
+
+            {/* Bagian Sumber Data Horizontal */}
+{/* Bagian Sumber Data Horizontal */}
+<div className="mt-5 animated fadeInUp">
+  <p className="text-white mb-3 small text-uppercase fw-bold" style={{ letterSpacing: '2px', textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
+    Sumber Data:
+  </p>
+  <div className="d-flex flex-row justify-content-center align-items-center gap-4 flex-wrap">
+    
+    {/* Sumber 1 */}
+    <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="/sumber/bps.jpg" alt="BPS" />
+      </div>
+      <span className="source-label">BPS</span>
+    </a>
+
+    {/* Sumber 2 */}
+    <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="/sumber/logobig.png" alt="BIG" />
+      </div>
+      <span className="source-label">Ina-Geoportal</span>
+    </a>
+
+    {/* Sumber 3 */}
+    <a href="https://data.dukcapil.kulonprogokab.go.id/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="sumber/kulon_progo.jpg" alt="Sidutaku" />
+      </div>
+      <span className="source-label">Sidutaku Kab. Kulon Progo</span>
+    </a>
+
+    {/* Sumber 4 */}
+    <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="/sumber/osm.png" alt="OSM" />
+      </div>
+      <span className="source-label">OpenStreetMap</span>
+    </a>
+
+  </div>
+</div>
+
+
+
           </div>
         </div>
       </div>
@@ -180,6 +227,49 @@ export default function Home() {
             >
               Grafik Jumlah Pengunjung
             </Link>
+
+{/* Bagian Sumber Data Horizontal */}
+<div className="mt-5 animated fadeInUp">
+  <p className="text-white mb-3 small text-uppercase fw-bold" style={{ letterSpacing: '2px', textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
+    Sumber Data:
+  </p>
+  <div className="d-flex flex-row justify-content-center align-items-center gap-4 flex-wrap">
+    
+    {/* Sumber 1 */}
+    <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="/sumber/bps.jpg" alt="BPS" />
+      </div>
+      <span className="source-label">BPS</span>
+    </a>
+
+    {/* Sumber 2 */}
+    <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="/sumber/logobig.png" alt="BIG" />
+      </div>
+      <span className="source-label">Ina-Geoportal</span>
+    </a>
+
+    {/* Sumber 3 */}
+    <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="/sumber/googlemaps.jpg" alt="Google Maps" />
+      </div>
+      <span className="source-label">Google Maps</span>
+    </a>
+
+    {/* Sumber 4 */}
+    <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
+      <div className="source-card">
+        <img src="/sumber/osm.png" alt="OSM" />
+      </div>
+      <span className="source-label">OpenStreetMap</span>
+    </a>
+
+  </div>
+</div>
+
           </div>
         </div>
       </div>
@@ -651,7 +741,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div className="text-center mb-4">
                         <div className="position-relative">
                             <img 
-                             src="img/peta-ekonomi-overview.jpg"
+                             src="/assets/eko.png"
                              className="img-fluid rounded" 
                              alt="Peta Potensi Ekonomi Overview" 
                              style={{maxHeight: "200px", width: "100%", objectFit: "cover", }}
@@ -722,7 +812,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     <div className="text-center mb-4">
                         <div className="position-relative">
-                            <img src="img/peta-pariwisata-overview.jpg" className="img-fluid rounded" alt="Peta Potensi Pariwisata Overview" style={{maxHeight: "200px", width: "100%", objectFit: "cover"}} />
+                            <img src="/assets/parwi.png" className="img-fluid rounded" alt="Peta Potensi Pariwisata Overview" style={{maxHeight: "200px", width: "100%", objectFit: "cover"}} />
                             <div className="position-absolute top-0 start-0 w-100 h-100 bg-primary" style={{opacity: 0.05, borderRadius: "8px"}}></div>
                         </div>
                     </div>

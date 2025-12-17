@@ -1331,19 +1331,25 @@ var pasarIcon = L.icon({
 
     
       
-      var searchControl = new L.Control.Search({
-        layer: layer_kulprogkeckeckp_1,
-        hideMarkerOnCollapse: true,
-        propertyName: "WADMKC",
-      });
 
-      map.addControl(searchControl);
 
       setBounds();
     </script>
 
     <!-- SCRIPT UNTUK SIDEBAR LAYER & LEGENDA -->
 <script>
+
+
+
+var searchControl = new L.Control.Search({
+    layer: layer_kulprogkeckeckp_1, // Pastikan layer ini sudah didefinisikan sebelumnya
+    initial: false,
+    hideMarkerOnCollapse: true,
+    propertyName: 'WADMKC', // Sesuaikan dengan kolom nama kecamatan di data Anda
+    position: 'topright'
+});
+
+map.addControl(searchControl);
 // ====== CONTROL SIDEBAR LAYER ======
 
 // Checkbox
