@@ -144,11 +144,14 @@ export default function Home() {
 
 {/* Bagian Sumber Data Horizontal */}
 {/* Bagian Sumber ekonomi Data Horizontal */}
-<div className="mt-5 animated fadeInUp">
-  <p className="text-white mb-3 small text-uppercase fw-bold" style={{ letterSpacing: '2px', textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
+{/* Bagian Sumber Data - Versi Anti-Numpuk & Compact */}
+<div className="mt-2 mt-md-4 animated fadeInUp">
+  <p className="text-white mb-2 small text-uppercase fw-bold" 
+     style={{ fontSize: '10px', letterSpacing: '1px', textShadow: '1px 1px 3px rgba(0,0,0,0.8)', opacity: 0.8 }}>
     Sumber Data:
   </p>
-  <div className="d-flex flex-row justify-content-center align-items-center gap-2 gap-md-4 flex-wrap">
+  
+  <div className="d-flex flex-row justify-content-center align-items-end gap-2 gap-md-4 flex-wrap">
     
     {/* Sumber 1 */}
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
@@ -169,9 +172,9 @@ export default function Home() {
     {/* Sumber 3 */}
     <a href="https://data.dukcapil.kulonprogokab.go.id/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
       <div className="source-card">
-        <img src="sumber/kulon_progo.jpg" alt="Sidutaku" />
+        <img src="/sumber/kulon_progo.jpg" alt="Sidutaku" />
       </div>
-      <span className="source-label">Sidutaku Kab. Kulon Progo</span>
+      <span className="source-label">Sidutaku</span>
     </a>
 
     {/* Sumber 4 */}
@@ -228,12 +231,14 @@ export default function Home() {
               Grafik Jumlah Pengunjung
             </Link>
 
-{/* Bagian Sumber parwi Data Horizontal */}
-<div className="mt-5 animated fadeInUp">
-  <p className="text-white mb-3 small text-uppercase fw-bold" style={{ letterSpacing: '2px', textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
+{/* Bagian Sumber Data Pariwisata - Compact Version */}
+<div className="mt-3 mt-md-5 animated fadeInUp">
+  <p className="text-white mb-2 small text-uppercase fw-bold" 
+     style={{ fontSize: '10px', letterSpacing: '1px', textShadow: '1px 1px 3px rgba(0,0,0,0.8)', opacity: 0.8 }}>
     Sumber Data:
   </p>
-  <div className="d-flex flex-row justify-content-center align-items-center gap-2 gap-md-4 flex-wrap">
+  
+  <div className="d-flex flex-row justify-content-center align-items-end gap-2 gap-md-4 flex-wrap">
     
     {/* Sumber 1 */}
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">

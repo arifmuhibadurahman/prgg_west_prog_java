@@ -216,65 +216,63 @@ section {
 
 
   /* Gaya untuk bagian sumber data */
-  .source-link {
+.source-link {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 85px; /* Lebar link dikunci agar tidak melebar */
     transition: all 0.3s ease;
-    flex: 0 0 auto; /* Mencegah item melebar paksa */
   }
 
   .source-card {
-    width: 100px;           /* Ukuran Desktop Standar */
-    height: 45px;
+    width: 100%;
+    height: 38px; /* TINGGI DIKUNCI MATI agar tidak menabrak tombol di atas */
     background-color: #ffffff;
-    padding: 5px;
+    padding: 4px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    margin-bottom: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    margin-bottom: 4px;
+    overflow: hidden;
   }
 
   .source-card img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    object-fit: contain; /* Memaksa gambar portrait tetap muat di kotak landscape */
   }
 
   .source-label {
     color: white;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 500;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    white-space: nowrap; /* Mencegah teks turun ke bawah */
+    text-shadow: 1px 1px 2px rgba(0,0,0,1);
+    white-space: nowrap; /* Teks satu baris agar tidak menambah tinggi vertikal */
+    text-align: center;
   }
 
-  /* KHUSUS TAMPILAN HP (MOBILE) */
-  @media (max-width: 768px) {
-    .source-card {
-      width: 70px;  /* Jauh lebih kecil di HP */
-      height: 35px;
-      padding: 4px;
-      border-radius: 4px;
+  /* KHUSUS HP (Sangat Kecil & Ringkas) */
+  @media (max-width: 576px) {
+    .source-link {
+      width: 60px; 
     }
     
+    .source-card {
+      height: 28px; /* Sangat tipis di HP */
+      padding: 3px;
+    }
+
     .source-label {
-      font-size: 0.55rem; /* Teks sangat kecil agar tidak penuh */
+      font-size: 0.5rem;
     }
 
-    .mt-5 {
-      margin-top: 1.5rem !important; /* Kurangi jarak atas agar tidak turun ke bawah banget */
-    }
-
-    .gap-4 {
-      gap: 10px !important; /* Persempit jarak antar logo */
+    .mt-2 {
+      margin-top: 0.25rem !important; /* Jarak dari tombol hampir mepet */
     }
   }
 
   .source-link:hover .source-card {
     transform: translateY(-3px);
-    background-color: #f8f9fa;
   }
-    
