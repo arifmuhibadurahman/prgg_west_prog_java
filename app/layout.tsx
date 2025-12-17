@@ -21,6 +21,10 @@ export default function RootLayout({
         <link rel="stylesheet" href="/landing/css/bootstrap.min.css" />
         <link rel="stylesheet" href="/landing/css/style.css" />
         <link rel="stylesheet" href="/landing/lib/animate/animate.min.css" />
+        <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
       </head>
 
       {/* FONT GLOBAL DIKUNCI DI SINI */}
@@ -45,6 +49,8 @@ export default function RootLayout({
 
         {/* Main Template JS */}
         <Script src="/landing/js/main.js" strategy="afterInteractive" />
+
+        
 
         {children}
       </body>

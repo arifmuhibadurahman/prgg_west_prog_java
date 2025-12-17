@@ -228,6 +228,9 @@ a {
     border: 3px solid rgba(255, 255, 255, .4) !important;
 }
 
+
+
+
 .leaflet-control-layers-expanded {
     padding-left: 6px;
 }
@@ -759,4 +762,9 @@ body {
   font-size:13px;
   color:#444;
 }
-/*instruksi
+
+
+
+.leaflet-control-search {
+  background: #f8f8f8 !important;
+}

@@ -760,31 +760,3 @@ body {
   color:#444;
 }
 /*instruksi
-
-
-/* ===== Legend Kecamatan ONLY ===== */
-.legend-kecamatan .legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.legend-kecamatan .kec-color {
-  width: 18px;
-  height: 18px;
-  border-radius: 2px;
-  border: 1px solid #555;
-}
-
-#leg_jalandesa .legend-color {
-  width: 18px;
-  height: 18px;
-  border-radius: 2px;
-  border: 1px solid #555;
-}
-
-#leg_jalandesa .legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}

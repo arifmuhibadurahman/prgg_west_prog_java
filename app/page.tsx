@@ -606,13 +606,269 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 
-{/* CSS untuk Background Potensi
-<style jsx>{`
-    .potensi-bg {
-        background-image: url('/landing/img/bg-potensi.jpg');
-    }
-`}</style>
- */}
+
+{/* Peta Potensi Start */}
+<div id="peta-potensi" className="container-fluid py-5 mb-0 section-with-bg">
+    {/* <!-- Background dengan opacity --> */}
+    <div className="section-bg peta-potensi-bg"></div>
+    
+    <div className="container section-content">
+                <div
+                className="text-center mx-auto pb-5 wow fadeIn"
+                data-wow-delay=".3s"
+                style={{ maxWidth: "800px" }}
+                >
+
+            <h5 className="text-primary">Peta Potensi</h5>
+            <h1>Peta Potensi Ekonomi dan Pariwisata Desa Kulon Progo</h1>
+            <p className="lead">Visualisasi spasial potensi ekonomi dan pariwisata desa untuk mendukung perencanaan pembangunan berkelanjutan</p>
+        </div>
+        
+        <div className="row g-4 justify-content-center">
+            {/* <!-- Peta Potensi Ekonomi --> */}
+            <div className="col-lg-6 col-md-6 wow fadeIn" data-wow-delay=".3s">
+                <div
+                className="h-100 p-4 rounded"
+                style={{
+                    background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,0.95) 100%)",
+                    borderLeft: "5px solid #4e73df",
+                    boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+                    backdropFilter: "blur(10px)",
+                }}
+>
+
+                    <div className="d-flex align-items-center mb-4">
+                        <div className="bg-primary rounded-circle p-3 me-3">
+                            <i className="fas fa-chart-line fa-2x text-white"></i>
+                        </div>
+                        <div>
+                            <h4 className="mb-1 text-dark">Peta Potensi Ekonomi</h4>
+                            <p className="text-muted mb-0">Visualisasi data ekonomi spasial desa</p>
+                        </div>
+                    </div>
+                    
+                    <div className="text-center mb-4">
+                        <div className="position-relative">
+                            <img 
+                             src="img/peta-ekonomi-overview.jpg"
+                             className="img-fluid rounded" 
+                             alt="Peta Potensi Ekonomi Overview" 
+                             style={{maxHeight: "200px", width: "100%", objectFit: "cover", }}
+                            />
+                            <div className="position-absolute top-0 start-0 w-100 h-100 bg-primary" style={{opacity: 0.05, borderRadius: "8px"}}></div>
+                        </div>
+                    </div>
+                    
+                    <p className="mb-4">Peta ini menampilkan tiga aspek utama potensi ekonomi desa di Kabupaten Kulon Progo untuk mendukung ketahanan ekonomi lokal dan pembangunan berkelanjutan.</p>
+                    
+                    <div className="mb-4">
+                        <h6 className="text-primary mb-3">Informasi yang Ditampilkan:</h6>
+                        <ul className="list-unstyled">
+                            <li className="mb-3 d-flex align-items-start">
+                                <i className="fas fa-dot-circle text-primary mt-1 me-3"></i>
+                                <div>
+                                    <strong className="d-block">Distribusi Aktivitas Ekonomi</strong>
+                                    <small className="text-muted">Sebaran UMKM dan pusat ekonomi per kecamatan</small>
+                                </div>
+                            </li>
+                            <li className="mb-3 d-flex align-items-start">
+                                <i className="fas fa-dot-circle text-primary mt-1 me-3"></i>
+                                <div>
+                                    <strong className="d-block">Aksesibilitas Fasilitas Ekonomi</strong>
+                                    <small className="text-muted">Kemudahan akses pasar dan jalur utama</small>
+                                </div>
+                            </li>
+                            <li className="mb-3 d-flex align-items-start">
+                                <i className="fas fa-dot-circle text-primary mt-1 me-3"></i>
+                                <div>
+                                    <strong className="d-block">Rasio Penduduk Bekerja 2024</strong>
+                                    <small className="text-muted">Partisipasi ekonomi berdasarkan estimasi data</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="text-center pt-3">
+                        <button type="button" className="btn btn-primary px-5 py-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#modalPetaEkonomi">
+                            <i className="fas fa-map-marked-alt me-2"></i>Deskripsi
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* <!-- Peta Potensi Pariwisata --> */}
+            <div className="col-lg-6 col-md-6 wow fadeIn" data-wow-delay=".5s">
+                <div
+                className="h-100 p-4 rounded"
+                style={{
+                    background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,0.95) 100%)",
+                    borderLeft: "5px solid #1cc88a",
+                    boxShadow: "0 5px 15px rgba(0,0,0,0.1)",
+                    backdropFilter: "blur(10px)",
+                }}
+>
+
+                    <div className="d-flex align-items-center mb-4">
+                        <div className="bg-primary rounded-circle p-3 me-3">
+                            <i className="fas fa-umbrella-beach fa-2x text-white"></i>
+                        </div>
+                        <div>
+                            <h4 className="mb-1 text-dark">Peta Potensi Pariwisata</h4>
+                            <p className="text-muted mb-0">Visualisasi data pariwisata spasial desa</p>
+                        </div>
+                    </div>
+                    
+                    <div className="text-center mb-4">
+                        <div className="position-relative">
+                            <img src="img/peta-pariwisata-overview.jpg" className="img-fluid rounded" alt="Peta Potensi Pariwisata Overview" style={{maxHeight: "200px", width: "100%", objectFit: "cover"}} />
+                            <div className="position-absolute top-0 start-0 w-100 h-100 bg-primary" style={{opacity: 0.05, borderRadius: "8px"}}></div>
+                        </div>
+                    </div>
+                    
+                    <p className="mb-4">Peta ini menampilkan tiga aspek utama potensi pariwisata desa di Kabupaten Kulon Progo untuk mendukung pengembangan sektor pariwisata berkelanjutan.</p>
+                    
+                    <div className="mb-4">
+                        <h6 className="text-primary mb-3">Informasi yang Ditampilkan:</h6>
+                        <ul className="list-unstyled">
+                            <li className="mb-3 d-flex align-items-start">
+                                <i className="fas fa-dot-circle text-primary mt-1 me-3"></i>
+                                <div>
+                                    <strong className="d-block">Jenis Wisata dan Popularitas</strong>
+                                    <small className="text-muted">Persebaran jenis wisata dan rating destinasi</small>
+                                </div>
+                            </li>
+                            <li className="mb-3 d-flex align-items-start">
+                                <i className="fas fa-dot-circle text-primary mt-1 me-3"></i>
+                                <div>
+                                    <strong className="d-block">Aksesibilitas Destinasi Wisata</strong>
+                                    <small className="text-muted">Kemudahan akses ke lokasi wisata</small>
+                                </div>
+                            </li>
+                            <li className="mb-3 d-flex align-items-start">
+                                <i className="fas fa-dot-circle text-primary mt-1 me-3"></i>
+                                <div>
+                                    <strong className="d-block">Distribusi Jumlah Wisata</strong>
+                                    <small className="text-muted">Persebaran destinasi per kecamatan</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="text-center pt-3">
+                        <button type="button" className="btn btn-primary px-5 py-3 rounded-pill" data-bs-toggle="modal" data-bs-target="#modalPetaPariwisata">
+                            <i className="fas fa-map-marked-alt me-2"></i>Deskripsi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/* <!-- Peta Potensi End --> */}
+{/* <!-- Modal untuk Peta Potensi Ekonomi --> */}
+<div
+  className="modal fade"
+  id="modalPetaEkonomi"
+  tabIndex={-1}
+  aria-labelledby="modalPetaEkonomiLabel"
+  aria-hidden="true">
+    <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-content wow fadeIn" data-wow-delay=".1s">
+            <div className="modal-header bg-primary text-white">
+                <h5 className="modal-title" id="modalPetaEkonomiLabel">Detail Peta Potensi Ekonomi Desa Kulon Progo</h5>
+                <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body p-4">
+                <div className="text-center mb-4 wow fadeIn" data-wow-delay=".2s">
+                    <i className="fas fa-chart-line fa-4x text-primary mb-3"></i>
+                    <h4 className="text-primary">Peta Potensi Ekonomi Kabupaten Kulon Progo</h4>
+                </div>
+                
+                <div className="mb-4 wow fadeIn" data-wow-delay=".3s">
+                    <h6 className="text-primary mb-3">1. Peta Distribusi Aktivitas Ekonomi</h6>
+                    <p className="mb-3">Peta ini menggambarkan tingkat aktivitas ekonomi di setiap kecamatan berdasarkan rasio jumlah UMKM per 1.000 penduduk. Peta ini menampilkan simbologi berupa sebaran titik-titik yang menandai lokasi unit usaha lokasi UMKM atau pusat kegiatan ekonomi seperti pasar dan toko. Sedangkan simbologi berupa gradasi warna menampilkan tingkat kepadatan aktivitas ekonomi yang berpotensi menjadi pusat pertumbuhan ekonomi lokal. Informasi ini dapat digunakan untuk mengidentifikasi tingkat aktivitas ekonomi di setiap wilayah kecamatan.</p>
+                </div>
+
+                <div className="mb-4 wow fadeIn" data-wow-delay=".4s">
+                    <h6 className="text-primary mb-3">2. Peta Aksesibilitas terhadap Fasilitas Ekonomi (pasar)</h6>
+                    <p className="mb-3">Peta aksesibilitas ekonomi menggambarkan tingkat kemudahan bagi suatu wilayah dalam mengakses pasar dan jalur utamanya. Wilayah yang berada dekat dengan pasar atau jalur utama menandakan akses yang baik, sementara wilayah yang jauh menunjukkan keterbatasan akses terhadap pusat ekonomi terdekat. Informasi ini dapat digunakan untuk merencanakan peningkatan infrastruktur aksesibilitas di setiap wilayah kecamatan.</p>
+                </div>
+
+                <div className="mb-4 wow fadeIn" data-wow-delay=".5s">
+                    <h6 className="text-primary mb-3">3. Peta Rasio Penduduk Bekerja pada tahun 2024</h6>
+                    <p className="mb-3">Peta ini menunjukkan rasio penduduk bekerja per kecamatan yang dihitung berdasarkan estimasi jumlah penduduk usia kerja dan jumlah penduduk yang bekerja di tahun 2024. Perbandingan ini memberikan gambaran mengenai tingkat partisipasi ekonomi suatu wilayah, di mana kecamatan dengan rasio lebih tinggi menunjukkan keterlibatan tenaga kerja yang lebih besar dalam aktivitas ekonomi. Informasi ini digunakan untuk melihat kecenderungan wilayah yang memiliki daya dorong ekonomi yang lebih kuat.</p>
+                </div>
+            </div>
+            <div className="modal-footer wow fadeIn" data-wow-delay=".6s">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/* <!-- Modal untuk Peta Potensi Pariwisata --> */}
+<div
+  className="modal fade"
+  id="modalPetaPariwisata"
+  tabIndex={-1}
+  aria-labelledby="modalPetaPariwisataLabel"
+  aria-hidden="true"
+>
+    <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div className="modal-content wow fadeIn" data-wow-delay=".1s">
+            <div className="modal-header bg-primary text-white">
+                <h5 className="modal-title" id="modalPetaPariwisataLabel">Detail Peta Potensi Pariwisata Desa Kulon Progo</h5>
+                <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body p-4">
+                <div className="text-center mb-4 wow fadeIn" data-wow-delay=".2s">
+                    <i className="fas fa-umbrella-beach fa-4x text-primary mb-3"></i>
+                    <h4 className="text-primary">Peta Potensi Pariwisata Kabupaten Kulon Progo</h4>
+                </div>
+                
+                <div className="mb-4 wow fadeIn" data-wow-delay=".3s">
+                    <h6 className="text-primary mb-3">1. Peta Jenis Wisata dan Tingkat Popularitas</h6>
+                    <p className="mb-3">Peta ini menunjukkan persebaran jenis wisata yang ada di Kabupaten Kulon Progo. Informasi ini dapat digunakan untuk mengetahui sebaran wisata dalam ruang spasial dan untuk perencanaan wisata sesuai target SDGs. Selain itu, peta ini juga menampilkan tingkat popularitas destinasi wisata berdasarkan rasio antara jumlah penilai dan rating tempat wisata. Ukuran simbol pada peta menggambarkan tingkat popularitas destinasi wisata tersebut. Semakin besar ukuran simbolnya, semakin tinggi tingkat popularitasnya, begitu pula sebaliknya.</p>
+                </div>
+
+                <div className="mb-4 wow fadeIn" data-wow-delay=".4s">
+                    <h6 className="text-primary mb-3">2. Peta Aksesibilitas Pariwisata</h6>
+                    <p className="mb-3">Peta ini menunjukkan tingkat aksesibilitas setiap wilayah kecamatan terhadap destinasi wisata yang ada. Wilayah dengan lokasi wisata yang mudah diakses melalui jalan utama menunjukkan tingkat aksesibilitas pariwisata yang tinggi. Sedangkan wilayah dengan lokasi wisata yang relatif sulit diakses melalui jalan utama menunjukkan tingkat aksesibilitas pariwisata yang terbatas. Informasi ini dapat digunakan untuk menilai sebaran pariwisata pendukung ekonomi dan perencanaan peningkatan akses wisata sesuai target SDGs.</p>
+                </div>
+
+                <div className="mb-4 wow fadeIn" data-wow-delay=".5s">
+                    <h6 className="text-primary mb-3">3. Peta Jumlah Wisata Per-Kecamatan</h6>
+                    <p className="mb-3">Peta ini menunjukkan banyaknya destinasi wisata yang ada di setiap kecamatan di Kabupaten Kulon Progo. Peta ini menampilkan proporsi jumlah dalam bentuk pie chart sehingga perbandingan antar wilayah dapat terlihat dengan lebih jelas. Setiap bagian lingkaran merepresentasikan jumlah objek wisata di kecamatan tersebut. Wilayah dengan jumlah destinasi yang banyak akan memiliki irisan lingkaran yang lebih besar, begitu pula sebaliknya. Informasi ini membantu memahami distribusi potensi wisata sekaligus menunjukkan kecamatan mana yang berpotensi menjadi fokus pengembangan sektor pariwisata daerah.</p>
+                </div>
+            </div>
+            <div className="modal-footer wow fadeIn" data-wow-delay=".6s">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <section
+        className="py-5"
+        style={{
+            backgroundImage: "url('/img/bg-peta-potensi.jpg')",
+            backgroundColor: "#f8f9fa",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+        }}
+        >
+  ...
+</section>
+    {/* CSS untuk Background Potensi
+    <style jsx>{`
+        .potensi-bg {
+            background-image: url('/landing/img/bg-potensi.jpg');
+        }
+    `}</style>
+    */}
+
 {/* Services End */}
         {/* Team*/}
 <section id="tentang-kami" className="page-section bg-light">
@@ -840,6 +1096,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h5 className="text-primary">Komentar</h5>
                     <h1 className="mb-3">Kritik dan Saran</h1>
                 </div>
+                <div className="text-center">
+                <a
+                    href="https://forms.gle/ISI_LINK_GFORM_KAMU"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn bg-primary text-white py-3 px-5">
+                    Link Gform Kuisioner
+                </a>
+                </div>
+
                 <div className="contact-detail position-relative p-4 p-md-5">
                     
                     <div className="row g-5">
