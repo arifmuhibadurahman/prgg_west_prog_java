@@ -142,13 +142,13 @@ export default function Home() {
             </Link>
 
 
-            {/* Bagian Sumber Data Horizontal */}
 {/* Bagian Sumber Data Horizontal */}
+{/* Bagian Sumber ekonomi Data Horizontal */}
 <div className="mt-5 animated fadeInUp">
   <p className="text-white mb-3 small text-uppercase fw-bold" style={{ letterSpacing: '2px', textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
     Sumber Data:
   </p>
-  <div className="d-flex flex-row justify-content-center align-items-center gap-4 flex-wrap">
+  <div className="d-flex flex-row justify-content-center align-items-center gap-2 gap-md-4 flex-wrap">
     
     {/* Sumber 1 */}
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
@@ -228,12 +228,12 @@ export default function Home() {
               Grafik Jumlah Pengunjung
             </Link>
 
-{/* Bagian Sumber Data Horizontal */}
+{/* Bagian Sumber parwi Data Horizontal */}
 <div className="mt-5 animated fadeInUp">
   <p className="text-white mb-3 small text-uppercase fw-bold" style={{ letterSpacing: '2px', textShadow: '1px 1px 3px rgba(0,0,0,0.5)' }}>
     Sumber Data:
   </p>
-  <div className="d-flex flex-row justify-content-center align-items-center gap-4 flex-wrap">
+  <div className="d-flex flex-row justify-content-center align-items-center gap-2 gap-md-4 flex-wrap">
     
     {/* Sumber 1 */}
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
