@@ -138,7 +138,7 @@ export default function Home() {
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-item-link">
       <div className="source-box-white">
         <img 
-          src="/sumber/bps.jpg" 
+          src="/sumber/bps.png" 
           alt="BPS" 
           className="source-logo-img"
         />
@@ -236,7 +236,7 @@ export default function Home() {
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-item-link">
       <div className="source-box-white">
         <img 
-          src="/sumber/bps.jpg" 
+          src="/sumber/bps.png" 
           alt="BPS" 
           className="source-logo-img"
         />
@@ -260,8 +260,8 @@ export default function Home() {
     <a href="https://maps.google.com/" target="_blank" rel="noopener noreferrer" className="source-item-link">
       <div className="source-box-white">
         <img 
-          src="/sumber/googlemaps.jpg" 
-          alt="Sidutaku/Maps" 
+          src="/sumber/googlemaps.png" 
+          alt="googlemaps/Maps" 
           className="source-logo-img"
         />
       </div>

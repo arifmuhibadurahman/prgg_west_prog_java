@@ -764,10 +764,17 @@ body {
 }
 
 
-
+/* ===== LEAFLET SEARCH CONTROL baruu===== */
 .leaflet-control-search {
   background: #f8f8f8 !important;
 }
 
-
-
+/* ===== DISCLAIMER ===== */
+#map {
+  bottom: 32px; /* tinggi disclaimer */
+}
+#disclaimer {
+  background: #f8f8f8;
+  color: #555;
+  letter-spacing: 0.2px;
+}

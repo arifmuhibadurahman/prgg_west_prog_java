@@ -34,7 +34,6 @@
   </head>
 
   <body>
-
  
  <!-- PANEL INSTRUKSI -->
 <div id="instruksi-layer" style="
@@ -102,6 +101,8 @@
   "></div>
 </div>
 
+
+
 <style>
   
  /* QGIS2WEB: layout map */
@@ -134,24 +135,22 @@ body.panel-open #instruksi-layer {
 }
 
 
+
+
 </style>
-
-
-
     <!-- HEADER CUSTOM (ALA DEVANTA) -->
     <div id="custom-header">
       <div class="header-left">
         <img src="images/transp.png" id="header-logo" alt="Logo">
         <div class="header-title">
-          <h1>PETA POTENSI EKONOMI DESA KABUPATEN KULON PROGO</h1>
+          <h1>PETA POTENSI EKONOMI KABUPATEN KULON PROGO</h1>
         </div>
       </div>
-
       <div class="header-right">
         <h2>Tahun 2025</h2>
       </div>
     </div>
-
+    
     <!-- SIDEBAR KIRI -->
     <div id="sidebar">
       <div class="section-title">
@@ -348,6 +347,8 @@ body.panel-open #instruksi-layer {
 
     <!-- KANVAS PETA -->
     <div id="map"></div>
+    
+
 
     <!-- JS LIBRARIES -->
     <script src="js/qgis2web_expressions.js"></script>
@@ -369,6 +370,31 @@ body.panel-open #instruksi-layer {
     <script src="data/titikkkRasio_UMKM_2.js"></script>
     <script src="data/jalanbnrjalann_3.js"></script>
     <script src="data/pasarunikpasarr_4.js"></script>
+
+
+    <div id="disclaimer">
+          Data yang digunakan bersumber dari BPS (Tahun 2024), OSM, dan data olahan penulis
+        </div>
+          <style>
+          #disclaimer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #e6f0f8;
+            border-top: 1px solid #dcdcdc;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-family: Inter, sans-serif;
+            color: #444;
+            text-align: center;
+            z-index: 1000;
+          }
+          </style>
+          <style>
+          /* === Naikkan attribution biar di atas disclaimer === */
+          .leaflet-control-attribution {bottom: 25px !important;  /* samain / sedikit di atas tinggi disclaimer */}
+          </style>
 
     <!-- SCRIPT PETA -->
     <script>
@@ -1495,3 +1521,4 @@ cbPasar.addEventListener("change", function () {
   updateInstruksi();
 });
 </script>
+
