@@ -104,19 +104,6 @@ export default function Home() {
           className="img-fluid"
           alt="First slide"
         />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
         <div className="carousel-caption">
           <div className="container carousel-content">
             <h1 className="text-white display-1 mb-4 animated fadeInRight">
@@ -208,20 +195,6 @@ export default function Home() {
           className="img-fluid"
           alt="Second slide"
         />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
-    <br className="d-block d-md-none" />
         <div className="carousel-caption">
           <div className="container carousel-content">
             <h1 className="text-white display-1 mb-4 animated fadeInLeft">
