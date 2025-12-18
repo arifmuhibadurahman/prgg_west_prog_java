@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { ubuntu } from "@/app/fonts";
+import { useRef } from 'react';
 
 export default function Home() {
 {/* SPINNER */}
@@ -1039,22 +1040,12 @@ document.addEventListener('DOMContentLoaded', function() {
             {/* Mahasiswa 1 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/arif.jpg" alt="Arif Muhammad Ibadurahman" />
-                    <h4 className="mt-3">Arif Muhammad Ibadurahman</h4>
-                    <p className="text-muted">22/505441/TK/55312</p>
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/vero.jpg" alt="Veronika Yola Aditya" />
+                    <h4 className="mt-3">Veronika Yola Aditya</h4>
+                    <p className="text-muted">22/493426/TK/54052</p>
                 </div>
             </div>
-
             {/* Mahasiswa 2 */}
-            <div className="col-lg-3 col-md-6">
-                <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/aufa.jpg" alt="Aufa Ashilah Januar Irfani" />
-                    <h4 className="mt-3">Aufa Ashilah Januar Irfani</h4>
-                    <p className="text-muted">22/504632/TK/55206</p>
-                </div>
-            </div>
-
-            {/* Mahasiswa 3 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
                     <img className="mx-auto rounded-circle student-img" src="/landing/img/team/zaky.jpg" alt="Razaky Farkhan Rakijan Martawigena" />
@@ -1062,13 +1053,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p className="text-muted">22/495043/TK/54364</p>
                 </div>
             </div>
-
+            {/* Mahasiswa 3 */}
+            <div className="col-lg-3 col-md-6">
+                <div className="team-member text-center">
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/aufa.jpg" alt="Aufa Ashilah Januar Irfani" />
+                    <h4 className="mt-3">Aufa Ashilah Januar Irfani</h4>
+                    <p className="text-muted">22/504632/TK/55206</p>
+                </div>
+            </div>
             {/* Mahasiswa 4 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/vero.jpg" alt="Veronika Yola Aditya" />
-                    <h4 className="mt-3">Veronika Yola Aditya</h4>
-                    <p className="text-muted">22/493426/TK/54052</p>
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/arif.jpg" alt="Arif Muhammad Ibadurahman" />
+                    <h4 className="mt-3">Arif Muhammad Ibadurahman</h4>
+                    <p className="text-muted">22/505441/TK/55312</p>
                 </div>
             </div>
 
@@ -1222,46 +1220,73 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 `}</style>
 */}
-        {/* Contact Start */}
+{/* Contact Start */}
         <div id="komentar" className="container-fluid py-5 mb-5">
             <div className="container">
                 <div className="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style={{maxWidth:"600px"}}>
                     <h5 className="text-primary">Komentar</h5>
                     <h1 className="mb-3">Kritik dan Saran</h1>
                 </div>
-                <div className="text-center">
-                <a
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSc53dHnSytIzAcrNhlsROQr4LOL9_ac3Jal9Z0-VkL0idJsjw/formResponse"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn bg-primary text-white py-3 px-5">
-                    Link Gform Kuisioner
-                </a>
-                <span style={{ marginRight: '6px', fontSize: '14px' }}>🕒</span>
-                <span>Waktu pengerjaan: 2 - 3 menit</span>
+                <div className="text-center mb-5">
+                    <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSc53dHnSytIzAcrNhlsROQr4LOL9_ac3Jal9Z0-VkL0idJsjw/formResponse"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn bg-primary text-white py-3 px-5">
+                        Link Gform Kuisioner
+                    </a>
+                    <span style={{ marginLeft: '10px', fontSize: '14px' }}>🕒 Waktu pengerjaan: 2 - 3 menit</span>
                 </div>
 
                 <div className="contact-detail position-relative p-4 p-md-5">
-                    
                     <div className="row g-5">
                         <div className="col-lg-6 wow fadeIn" data-wow-delay=".3s">
                             <div className="p-4 p-md-5 h-100 rounded contact-map">
-                                <iframe className="rounded w-100 h-100" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.424123293283!2d110.1569869749957!3d-7.858054392179816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a569bb4b7f7c9%3A0x7f56c36a0b5a5a5a!2sKantor%20Bupati%20Kulon%20Progo!5e0!3m2!1sen!2sid!4v1690000000000!5m2!1sen!2sid" style={{border:0, minHeight:"300px"}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                                <iframe className="rounded w-100 h-100" src="https://maps.google.com/maps?q=indonesia&t=&z=13&ie=UTF8&iwloc=&output=embed" style={{border:0, minHeight:"300px"}} allowFullScreen loading="lazy"></iframe>
                             </div>
                         </div>
                         <div className="col-lg-6 wow fadeIn" data-wow-delay=".5s">
                             <div className="p-4 p-md-5 rounded contact-form">
                                 <div className="mb-4">
-                                    <input type="text" className="form-control border-0 py-3" placeholder="Nama"/>
+                                    <input type="text" id="inputNama" className="form-control border-0 py-3" placeholder="Nama"/>
                                 </div>
                                 <div className="mb-4">
-                                    <input type="email" className="form-control border-0 py-3" placeholder="Email"/>
+                                    <input type="email" id="inputEmail" className="form-control border-0 py-3" placeholder="Email"/>
                                 </div>
                                 <div className="mb-4">
-                                    <textarea className="w-100 form-control border-0 py-3" rows={6} cols={10} placeholder="Pesan"></textarea>
+                                    <textarea id="inputPesan" className="w-100 form-control border-0 py-3" rows={6} placeholder="Pesan"></textarea>
                                 </div>
                                 <div className="text-start">
-                                    <button className="btn bg-primary text-white py-3 px-5" type="button">Kirim Pesan</button>
+                                    <button 
+                                        className="btn bg-primary text-white py-3 px-5" 
+                                        type="button"
+                                        onClick={() => {
+                                            const nama = (document.getElementById('inputNama') as HTMLInputElement).value;
+                                            const email = (document.getElementById('inputEmail') as HTMLInputElement).value;
+                                            const pesan = (document.getElementById('inputPesan') as HTMLTextAreaElement).value;
+
+                                            if(!nama || !email || !pesan) {
+                                                alert("Tolong isi semua kolom ya!");
+                                                return;
+                                            }
+
+                                            const emailTujuan = "arifmuhibadurahman2@gmail.com"; // GANTI DENGAN EMAIL ANDA
+                                            const subjek = encodeURIComponent(`Kritik/Saran dari ${nama}`);
+                                            const isi = encodeURIComponent(`Nama: ${nama}\nEmail: ${email}\n\nPesan:\n${pesan}`);
+                                            
+                                            const startTime = Date.now();
+                                            window.location.href = `mailto:${emailTujuan}?subject=${subjek}&body=${isi}`;
+
+                                            // Cek jika aplikasi email tidak terbuka dalam 2 detik
+                                            setTimeout(() => {
+                                                if (document.hasFocus() && (Date.now() - startTime < 2500)) {
+                                                    alert("Aplikasi email tidak ditemukan. Silakan hubungi langsung ke: " + emailTujuan);
+                                                }
+                                            }, 2000);
+                                        }}
+                                    >
+                                        Kirim Pesan
+                                    </button>
                                 </div>
                             </div>
                         </div>
