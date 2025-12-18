@@ -102,7 +102,6 @@ export default function Home() {
         aria-label="Second slide"
       ></li>
     </ol>
-
     <div className="carousel-inner" role="listbox">
       {/* Slide 1 */}
       <div className="carousel-item active">
@@ -111,6 +110,19 @@ export default function Home() {
           className="img-fluid"
           alt="First slide"
         />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
         <div className="carousel-caption">
           <div className="container carousel-content">
             <h1 className="text-white display-1 mb-4 animated fadeInRight">
@@ -120,7 +132,6 @@ export default function Home() {
               Menyajikan informasi potensi ekonomi desa dalam berbagai aspek
               secara terpadu melalui peta interaktif.
             </p>
-
             <Link
               href="/Ekonomi"
             className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn1 animated fadeInLeft me-2"
@@ -134,14 +145,11 @@ export default function Home() {
             >
               Peta Ekonomi
             </Link>
-                        <Link
+            <Link
               href="/data"
-              className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight ms-2"
-            >
+              className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight ms-2">
               Grafik Jumlah Pengunjung
             </Link>
-
-
 {/* Bagian Sumber Data Horizontal */}
 {/* Bagian Sumber ekonomi Data Horizontal */}
 {/* Bagian Sumber Data - Versi Anti-Numpuk & Compact */}
@@ -150,7 +158,6 @@ export default function Home() {
 {/* ================= BAGIAN SUMBER DATA ================= */}
 <div className="source-container animated fadeInUp">
   <p className="source-header">Sumber Data:</p>
-  
   <div className="source-wrapper-flex">
     {/* Sumber 1 */}
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-item-link">
@@ -163,7 +170,6 @@ export default function Home() {
       </div>
       <span className="source-item-label">BPS</span>
     </a>
-
     {/* Sumber 2 */}
     <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener noreferrer" className="source-item-link">
       <div className="source-box-white">
@@ -187,7 +193,6 @@ export default function Home() {
       </div>
       <span className="source-item-label">Sidutaku</span>
     </a>
-
     {/* Sumber 4 */}
     <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer" className="source-item-link">
       <div className="source-box-white">
@@ -215,6 +220,21 @@ export default function Home() {
           className="img-fluid"
           alt="Second slide"
         />
+
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
+    <br className="d-block d-md-none" />
         <div className="carousel-caption">
           <div className="container carousel-content">
             <h1 className="text-white display-1 mb-4 animated fadeInLeft">
@@ -1219,7 +1239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div className="text-center">
                 <a
-                    href="https://forms.gle/ISI_LINK_GFORM_KAMU"
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSc53dHnSytIzAcrNhlsROQr4LOL9_ac3Jal9Z0-VkL0idJsjw/formResponse"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn bg-primary text-white py-3 px-5">
