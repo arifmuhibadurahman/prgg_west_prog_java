@@ -145,46 +145,27 @@ export default function Home() {
 {/* Bagian Sumber Data Horizontal */}
 {/* Bagian Sumber ekonomi Data Horizontal */}
 {/* Bagian Sumber Data - Versi Anti-Numpuk & Compact */}
-<div className="mt-2 mt-md-4 animated fadeInUp">
-  <p className="text-white mb-2 small text-uppercase fw-bold" 
-     style={{ fontSize: '10px', letterSpacing: '1px', textShadow: '1px 1px 3px rgba(0,0,0,0.8)', opacity: 0.8 }}>
-    Sumber Data:
-  </p>
-  
-  <div className="d-flex flex-row justify-content-center align-items-end gap-2 gap-md-4 flex-wrap">
-    
-    {/* Sumber 1 */}
+{/* Bagian Sumber Data - Optimized Layout */}
+{/* Bagian Sumber Data Ekonomi */}
+<div className="source-section animated fadeInUp">
+  <p className="source-title">Sumber Data:</p>
+  <div className="source-flex-container">
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/bps.jpg" alt="BPS" />
-      </div>
+      <div className="source-card"><img src="/sumber/bps.jpg" alt="BPS" /></div>
       <span className="source-label">BPS</span>
     </a>
-
-    {/* Sumber 2 */}
     <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/logobig.png" alt="BIG" />
-      </div>
+      <div className="source-card"><img src="/sumber/logobig.png" alt="BIG" /></div>
       <span className="source-label">Ina-Geoportal</span>
     </a>
-
-    {/* Sumber 3 */}
     <a href="https://data.dukcapil.kulonprogokab.go.id/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/kulon_progo.jpg" alt="Sidutaku" />
-      </div>
+      <div className="source-card"><img src="/sumber/kulon_progo.jpg" alt="Sidutaku" /></div>
       <span className="source-label">Sidutaku</span>
     </a>
-
-    {/* Sumber 4 */}
     <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/osm.png" alt="OSM" />
-      </div>
+      <div className="source-card"><img src="/sumber/osm.png" alt="OSM" /></div>
       <span className="source-label">OpenStreetMap</span>
     </a>
-
   </div>
 </div>
 
@@ -232,49 +213,33 @@ export default function Home() {
             </Link>
 
 {/* Bagian Sumber Data Pariwisata - Compact Version */}
-<div className="mt-3 mt-md-5 animated fadeInUp">
-  <p className="text-white mb-2 small text-uppercase fw-bold" 
-     style={{ fontSize: '10px', letterSpacing: '1px', textShadow: '1px 1px 3px rgba(0,0,0,0.8)', opacity: 0.8 }}>
-    Sumber Data:
-  </p>
-  
-  <div className="d-flex flex-row justify-content-center align-items-end gap-2 gap-md-4 flex-wrap">
+{/* Bagian Sumber Data Pariwisata */}
+<div className="source-section animated fadeInUp">
+  <p className="source-title">Sumber Data:</p>
+  <div className="source-flex-container">
     
-    {/* Sumber 1 */}
     <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/bps.jpg" alt="BPS" />
-      </div>
+      <div className="source-card"><img src="/sumber/bps.jpg" alt="BPS" /></div>
       <span className="source-label">BPS</span>
     </a>
 
-    {/* Sumber 2 */}
     <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/logobig.png" alt="BIG" />
-      </div>
+      <div className="source-card"><img src="/sumber/logobig.png" alt="BIG" /></div>
       <span className="source-label">Ina-Geoportal</span>
     </a>
 
-    {/* Sumber 3 */}
     <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/googlemaps.jpg" alt="Google Maps" />
-      </div>
+      <div className="source-card"><img src="/sumber/googlemaps.jpg" alt="Google Maps" /></div>
       <span className="source-label">Google Maps</span>
     </a>
 
-    {/* Sumber 4 */}
     <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer" className="source-link text-decoration-none">
-      <div className="source-card">
-        <img src="/sumber/osm.png" alt="OSM" />
-      </div>
+      <div className="source-card"><img src="/sumber/osm.png" alt="OSM" /></div>
       <span className="source-label">OpenStreetMap</span>
     </a>
 
   </div>
 </div>
-
           </div>
         </div>
       </div>
