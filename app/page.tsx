@@ -1056,7 +1056,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {/* Mahasiswa 3 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/aufa.jpg" alt="Aufa Ashilah Januar Irfani" />
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/aufa.JPEG" alt="Aufa Ashilah Januar Irfani" />
                     <h4 className="mt-3">Aufa Ashilah Januar Irfani</h4>
                     <p className="text-muted">22/504632/TK/55206</p>
                 </div>

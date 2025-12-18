@@ -5,7 +5,7 @@ import { Poppins, Ubuntu } from "next/font/google";
 import { poppins } from "./fonts";
 
 export const metadata = {
-  title: "PRGG 2025",
+  title: "Web Peta Potensi Kabupaten Kulon Progo",
   description: "Pemetaan Potensi Desa",
 };
 
