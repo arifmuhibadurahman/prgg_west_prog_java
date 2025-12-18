@@ -147,44 +147,58 @@ export default function Home() {
 {/* Bagian Sumber Data - Versi Anti-Numpuk & Compact */}
 {/* Bagian Sumber Data - Optimized Layout */}
 {/* Bagian Sumber Data Ekonomi */}
-<div className="source-section animated fadeInUp">
-  <p className="text-white mb-2 fw-bold text-uppercase text-center" style={{ fontSize: '10px', textShadow: '1px 1px 3px black' }}>
-    Sumber Data:
-  </p>
-  <div className="source-flex-container">
-    
-    {/* Item 1 */}
-    <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/bps.jpg" alt="BPS" />
+{/* ================= BAGIAN SUMBER DATA ================= */}
+<div className="source-container animated fadeInUp">
+  <p className="source-header">Sumber Data:</p>
+  
+  <div className="source-wrapper-flex">
+    {/* Sumber 1 */}
+    <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/bps.jpg" 
+          alt="BPS" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">BPS</span>
+      <span className="source-item-label">BPS</span>
     </a>
 
-    {/* Item 2 */}
-    <a href="https://tanahair.indonesia.go.id" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/logobig.png" alt="BIG" />
+    {/* Sumber 2 */}
+    <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/logobig.png" 
+          alt="BIG" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">Ina-Geoportal</span>
+      <span className="source-item-label">Ina-Geoportal</span>
     </a>
 
-    {/* Item 3 (Ganti antara Sidutaku atau Google Maps sesuai slide) */}
-    <a href="#" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/kulon_progo.jpg" alt="Sumber" />
+    {/* Sumber 3 (Ganti Link & Nama Sesuai Slide Ekonomi/Pariwisata) */}
+    <a href="https://data.dukcapil.kulonprogokab.go.id/" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/kulon_progo.jpg" 
+          alt="Sidutaku/Maps" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">Sidutaku</span>
+      <span className="source-item-label">Sidutaku</span>
     </a>
 
-    {/* Item 4 */}
-    <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/osm.png" alt="OSM" />
+    {/* Sumber 4 */}
+    <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/osm.png" 
+          alt="OSM" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">OpenStreetMap</span>
+      <span className="source-item-label">OpenStreetMap</span>
     </a>
-
   </div>
 </div>
 
@@ -233,44 +247,58 @@ export default function Home() {
 
 {/* Bagian Sumber Data Pariwisata - Compact Version */}
 {/* Bagian Sumber Data Pariwisata */}
-<div className="source-section animated fadeInUp">
-  <p className="text-white mb-2 fw-bold text-uppercase text-center" style={{ fontSize: '10px', textShadow: '1px 1px 3px black' }}>
-    Sumber Data:
-  </p>
-  <div className="source-flex-container">
-    
-    {/* Item 1 */}
-    <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/bps.jpg" alt="BPS" />
+{/* ================= BAGIAN SUMBER DATA ================= */}
+<div className="source-container animated fadeInUp">
+  <p className="source-header">Sumber Data:</p>
+  
+  <div className="source-wrapper-flex">
+    {/* Sumber 1 */}
+    <a href="https://bps.go.id" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/bps.jpg" 
+          alt="BPS" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">BPS</span>
+      <span className="source-item-label">BPS</span>
     </a>
 
-    {/* Item 2 */}
-    <a href="https://tanahair.indonesia.go.id" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/logobig.png" alt="BIG" />
+    {/* Sumber 2 */}
+    <a href="https://tanahair.indonesia.go.id/portal-web/" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/logobig.png" 
+          alt="BIG" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">Ina-Geoportal</span>
+      <span className="source-item-label">Ina-Geoportal</span>
     </a>
 
-    {/* Item 3 (Ganti antara Sidutaku atau Google Maps sesuai slide) */}
-    <a href="#" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/googlemaps.jpg" alt="Sumber" />
+    {/* Sumber 3 (Ganti Link & Nama Sesuai Slide Ekonomi/Pariwisata) */}
+    <a href="https://maps.google.com/" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/googlemaps.jpg" 
+          alt="Sidutaku/Maps" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">Google Maps</span>
+      <span className="source-item-label">Google Maps</span>
     </a>
 
-    {/* Item 4 */}
-    <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" className="source-link">
-      <div className="source-card">
-        <img src="/sumber/osm.png" alt="OSM" />
+    {/* Sumber 4 */}
+    <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer" className="source-item-link">
+      <div className="source-box-white">
+        <img 
+          src="/sumber/osm.png" 
+          alt="OSM" 
+          className="source-logo-img"
+        />
       </div>
-      <span className="source-label">OpenStreetMap</span>
+      <span className="source-item-label">OpenStreetMap</span>
     </a>
-
   </div>
 </div>
           </div>
