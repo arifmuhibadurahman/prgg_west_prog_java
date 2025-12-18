@@ -216,89 +216,81 @@ section {
 
 
   /* Gaya untuk bagian sumber data */
-.sumber-container {
-    margin-top: 2.5rem; /* Jarak aman dari tombol */
-    width: 100%;
+  .source-section {
+    margin-top: 1.5rem; /* Jarak aman di bawah tombol */
   }
 
-  .sumber-heading {
+  .source-title {
     color: white;
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 9px;
+    font-weight: bold;
     text-transform: uppercase;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     letter-spacing: 1px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 2px black;
   }
 
-  .sumber-grid {
+  .source-flex-container {
     display: flex;
+    flex-row: row;
     justify-content: center;
     align-items: flex-start;
-    gap: 15px;
-    flex-wrap: wrap; /* Agar kalau layar sangat kecil, dia turun tapi tetap rapi */
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
-  .sumber-item {
+  .source-link {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-decoration: none;
-    transition: transform 0.2s ease;
+    width: 80px;
+    transition: transform 0.2s;
   }
 
-  .sumber-card {
+  .source-card {
+    width: 100%;
+    height: 38px;      /* Tinggi dikunci mati di Desktop */
     background-color: white;
-    padding: 6px 12px; /* Padding samping lebih lebar agar gambar memanjang tidak kepotong */
-    border-radius: 6px;
-    height: 45px;      /* Tinggi FIX di Desktop */
+    padding: 5px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    min-width: 80px;   /* Lebar minimal agar kotak tidak terlalu ciut */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+    margin-bottom: 4px;
+    overflow: hidden;
   }
 
-  .sumber-card img {
-    height: 100%;      /* Mengikuti tinggi kotak */
-    width: auto;       /* Lebar menyesuaikan proporsi gambar asli */
-    max-width: 100px;  /* Batas maksimal agar tidak terlalu lebar */
-    object-fit: contain; /* JAMINAN: Gambar tidak akan pernah kepotong */
+  .source-card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* JAMINAN: Gambar setinggi apapun tidak akan kepotong */
   }
 
-  .sumber-text {
+  .source-label {
     color: white;
-    font-size: 9px;
-    margin-top: 6px;
-    font-weight: 500;
+    font-size: 8px;
+    font-weight: 600;
     text-shadow: 1px 1px 2px black;
-    max-width: 90px;
-    line-height: 1.1;
     text-align: center;
+    line-height: 1.1;
   }
 
-  /* KHUSUS MOBILE (HP) - AGAR CEPER & TIDAK NUMPUK */
   @media (max-width: 576px) {
-    .sumber-container {
-      margin-top: 1rem !important; /* Mepet ke bawah agar tombol di atas punya ruang */
+    .source-section {
+      margin-top: 0.5rem; /* Sangat mepet ke tombol agar tombol aman klik */
     }
-
-    .sumber-grid {
-      gap: 8px; /* Jarak antar kotak lebih rapat */
+    .source-link {
+      width: 55px; /* Makin ramping di HP */
     }
-
-    .sumber-card {
-      height: 32px;    /* SANGAT CEPER: Rahasia agar tidak menutupi tombol */
-      padding: 4px 8px;
-      min-width: 60px;
+    .source-card {
+      height: 24px; /* SUPER CEPER di HP: Solusi agar tidak menutupi tombol */
+      padding: 3px;
     }
-
-    .sumber-text {
-      font-size: 8px;
-      margin-top: 4px;
+    .source-label {
+      font-size: 7px;
     }
-  }
-
-  .sumber-item:hover {
-    transform: translateY(-4px);
+    .source-flex-container {
+      gap: 6px; /* Jarak antar logo di HP dipersempit */
+    }
   }
