@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { ubuntu } from "@/app/fonts";
 
-
 export default function Home() {
 {/* SPINNER */}
     const pathname = usePathname();
@@ -14,7 +13,6 @@ export default function Home() {
     const spinner = document.getElementById("spinner");
     if (spinner) spinner.classList.remove("show");
   }, [pathname]);
-
 {/* FACT SECTION */}
     useEffect(() => {
     const counters = document.querySelectorAll(".counter-value");
@@ -23,7 +21,6 @@ export default function Home() {
         const target = parseFloat(counter.getAttribute("data-target") || "0");
         const current = parseFloat(counter.textContent || "0");
         const increment = target / 200;
-
         if (current < target) {
           counter.textContent = (current + increment).toFixed(2);
           requestAnimationFrame(updateCount);
@@ -31,12 +28,10 @@ export default function Home() {
           counter.textContent = target.toString();
         }
       };
-
       updateCount();
     });
   }, []);
   return (
-
     <>
       {/* ================= HTML JSX ================= */}
       {/* Spinner Start */}
@@ -47,7 +42,6 @@ export default function Home() {
         <div className="spinner-grow text-primary" role="status"></div>
       </div>
         {/* Spinner End */}
-
     <div>
       {/* ================= Navbar ================= */}
       <div className="container-fluid bg-primary fixed-top">
@@ -60,7 +54,6 @@ export default function Home() {
             PRGG <span className="text-secondary"> 2025</span>
         </h1>
         </Link>
-
           {/* Navbar links */}
           <div className="d-flex align-items-center gap-3">
             <Link href="/" className="nav-link text-white px-2">Beranda</Link>
@@ -71,7 +64,7 @@ export default function Home() {
 
             {/* Login Button */}
             <Link href="/login" className="btn btn-light text-primary px-3 py-1">
-              Login
+              Login admin
             </Link>
           </div>
         </div>
@@ -138,17 +131,11 @@ export default function Home() {
             >
               Produk Ekonomi
             </Link>
-
             <Link
               href="/qgis_eko"
               className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight ms-2"
             >
               Peta Ekonomi
-            </Link>
-            <Link
-              href="/data"
-              className="px-4 py-sm-3 px-sm-5 btn btn-primary rounded-pill carousel-content-btn2 animated fadeInRight ms-2">
-              Grafik Jumlah Pengunjung
             </Link>
 {/* Bagian Sumber Data Horizontal */}
 {/* Bagian Sumber ekonomi Data Horizontal */}
@@ -220,7 +207,6 @@ export default function Home() {
           className="img-fluid"
           alt="Second slide"
         />
-
     <br className="d-block d-md-none" />
     <br className="d-block d-md-none" />
     <br className="d-block d-md-none" />
@@ -665,7 +651,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <i className="fas fa-money-bill-wave fa-4x text-primary mb-3"></i>
                     <h4 className="text-primary">Potensi Ekonomi Desa</h4>
                 </div>
-                
                 <h6 className="text-primary mb-3">1. Sektor Pertanian</h6>
                 <p className="mb-3">Kabupaten Kulon Progo memiliki potensi pertanian yang meliputi:</p>
                 <ul className="mb-4">
@@ -674,7 +659,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li>Perkebunan (kelapa, cengkeh, kopi)</li>
                     <li>Tanaman pangan lainnya</li>
                 </ul>
-
                 <h6 className="text-primary mb-3">2. Industri Kreatif dan UMKM</h6>
                 <p className="mb-3">Berbagai usaha mikro, kecil, dan menengah yang berkembang:</p>
                 <ul className="mb-4">
@@ -683,7 +667,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li>Makanan dan minuman khas</li>
                     <li>Batik dan tenun tradisional</li>
                 </ul>
-
                 <h6 className="text-primary mb-3">3. Potensi Perikanan</h6>
                 <p className="mb-3">Wilayah pesisir Kulon Progo memiliki potensi perikanan tangkap dan budidaya.</p>
 
@@ -696,7 +679,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
-
 {/* Modal untuk Potensi Pariwisata */}
 <div className="modal fade" id="potensiPariwisataModal" tabIndex={-1} aria-labelledby="potensiPariwisataModalLabel" aria-hidden="true">
     <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -710,7 +692,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <i className="fas fa-umbrella-beach fa-4x text-primary mb-3"></i>
                     <h4 className="text-primary">Potensi Pariwisata Desa</h4>
                 </div>
-                
                 <h6 className="text-primary mb-3">1. Wisata Alam</h6>
                 <p className="mb-3">Destinasi wisata alam unggulan:</p>
                 <ul className="mb-4">
@@ -719,7 +700,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li><strong>Kalibiru</strong> - Wisata alam dan spot foto</li>
                     <li><strong>Puncak Suroloyo</strong> - Wisata pendakian dan sunrise</li>
                 </ul>
-
                 <h6 className="text-primary mb-3">2. Wisata Budaya</h6>
                 <p className="mb-3">Kekayaan budaya dan tradisi:</p>
                 <ul className="mb-4">
@@ -728,7 +708,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li>Kerajinan tangan khas</li>
                     <li>Kuliner tradisional</li>
                 </ul>
-
                 <h6 className="text-primary mb-3">3. Agrowisata</h6>
                 <p className="mb-3">Wisata berbasis pertanian dan perkebunan:</p>
                 <ul className="mb-4">
@@ -736,7 +715,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li>Wisata edukasi pertanian</li>
                     <li>Pengolahan hasil pertanian</li>
                 </ul>
-
                 <h6 className="text-primary mb-3">4. Aksesibilitas</h6>
                 <p className="mb-0">Lokasi strategis dekat dengan Kota Yogyakarta membuat Kulon Progo mudah dijangkau oleh wisatawan domestik maupun mancanegara.</p>
             </div>
@@ -759,7 +737,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 data-wow-delay=".3s"
                 style={{ maxWidth: "800px" }}
                 >
-
             <h5 className="text-primary">Peta Potensi</h5>
             <h1>Peta Potensi Ekonomi dan Pariwisata Desa Kulon Progo</h1>
             <p className="lead">Visualisasi spasial potensi ekonomi dan pariwisata desa untuk mendukung perencanaan pembangunan berkelanjutan</p>
@@ -789,17 +766,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     
-                    <div className="text-center mb-4">
-                        <div className="position-relative">
-                            <img 
-                             src="/assets/eko.png"
-                             className="img-fluid rounded" 
-                             alt="Peta Potensi Ekonomi Overview" 
-                             style={{maxHeight: "200px", width: "100%", objectFit: "cover", }}
-                            />
-                            <div className="position-absolute top-0 start-0 w-100 h-100 bg-primary" style={{opacity: 0.05, borderRadius: "8px"}}></div>
-                        </div>
-                    </div>
+<div className="text-center mb-4">
+    <div className="position-relative" style={{ backgroundColor: "#f8f9fa", borderRadius: "8px", overflow: "hidden" }}>
+        <img 
+            src="/assets/peta-ekonomi-overview.jpg"
+            className="img-fluid" 
+            alt="Peta Potensi Ekonomi Overview" 
+            style={{
+                height: "200px",      // Mengunci tinggi box
+                width: "100%",        // Memenuhi lebar container
+                objectFit: "contain", // MENJAMIN gambar tidak terpotong (seluruh peta terlihat)
+                padding: "10px"       // Memberi sedikit ruang agar gambar tidak menempel ke tepi
+            }}
+        />
+        {/* Layer Overlay Tipis */}
+        <div className="position-absolute top-0 start-0 w-100 h-100 bg-primary" style={{opacity: 0.03, pointerEvents: "none"}}></div>
+    </div>
+</div>
                     
                     <p className="mb-4">Peta ini menampilkan tiga aspek utama potensi ekonomi desa di Kabupaten Kulon Progo untuk mendukung ketahanan ekonomi lokal dan pembangunan berkelanjutan.</p>
                     
@@ -861,12 +844,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     
-                    <div className="text-center mb-4">
-                        <div className="position-relative">
-                            <img src="/assets/parwi.png" className="img-fluid rounded" alt="Peta Potensi Pariwisata Overview" style={{maxHeight: "200px", width: "100%", objectFit: "cover"}} />
-                            <div className="position-absolute top-0 start-0 w-100 h-100 bg-primary" style={{opacity: 0.05, borderRadius: "8px"}}></div>
-                        </div>
-                    </div>
+<div className="text-center mb-4">
+    <div className="position-relative" style={{ backgroundColor: "#f8f9fa", borderRadius: "8px", overflow: "hidden" }}>
+        <img 
+            src="/assets/peta-pariwisata-overview.jpg"
+            className="img-fluid" 
+            alt="Peta Potensi Ekonomi Overview" 
+            style={{
+                height: "200px",      // Mengunci tinggi box
+                width: "100%",        // Memenuhi lebar container
+                objectFit: "contain", // MENJAMIN gambar tidak terpotong (seluruh peta terlihat)
+                padding: "10px"       // Memberi sedikit ruang agar gambar tidak menempel ke tepi
+            }}
+        />
+        {/* Layer Overlay Tipis */}
+        <div className="position-absolute top-0 start-0 w-100 h-100 bg-primary" style={{opacity: 0.03, pointerEvents: "none"}}></div>
+    </div>
+</div>
                     
                     <p className="mb-4">Peta ini menampilkan tiga aspek utama potensi pariwisata desa di Kabupaten Kulon Progo untuk mendukung pengembangan sektor pariwisata berkelanjutan.</p>
                     
@@ -1045,7 +1039,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {/* Mahasiswa 1 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/rara.jpg" alt="Arif Muhammad Ibadurahman" />
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/arif.jpg" alt="Arif Muhammad Ibadurahman" />
                     <h4 className="mt-3">Arif Muhammad Ibadurahman</h4>
                     <p className="text-muted">22/505441/TK/55312</p>
                 </div>
@@ -1054,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {/* Mahasiswa 2 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/enzal.jpg" alt="Aufa Ashilah Januar Irfani" />
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/aufa.jpg" alt="Aufa Ashilah Januar Irfani" />
                     <h4 className="mt-3">Aufa Ashilah Januar Irfani</h4>
                     <p className="text-muted">22/504632/TK/55206</p>
                 </div>
@@ -1063,7 +1057,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {/* Mahasiswa 3 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/lintang.jpg" alt="Razaky Farkhan Rakijan Martawigena" />
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/zaky.jpg" alt="Razaky Farkhan Rakijan Martawigena" />
                     <h4 className="mt-3">Razaky Farkhan Rakijan Martawigena</h4>
                     <p className="text-muted">22/495043/TK/54364</p>
                 </div>
@@ -1072,7 +1066,7 @@ document.addEventListener('DOMContentLoaded', function() {
             {/* Mahasiswa 4 */}
             <div className="col-lg-3 col-md-6">
                 <div className="team-member text-center">
-                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/intan.jpg" alt="Veronika Yola Aditya" />
+                    <img className="mx-auto rounded-circle student-img" src="/landing/img/team/vero.jpg" alt="Veronika Yola Aditya" />
                     <h4 className="mt-3">Veronika Yola Aditya</h4>
                     <p className="text-muted">22/493426/TK/54052</p>
                 </div>
@@ -1228,8 +1222,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 `}</style>
 */}
-
-
         {/* Contact Start */}
         <div id="komentar" className="container-fluid py-5 mb-5">
             <div className="container">
@@ -1245,6 +1237,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     className="btn bg-primary text-white py-3 px-5">
                     Link Gform Kuisioner
                 </a>
+                <span style={{ marginRight: '6px', fontSize: '14px' }}>🕒</span>
+                <span>Waktu pengerjaan: 2 - 3 menit</span>
                 </div>
 
                 <div className="contact-detail position-relative p-4 p-md-5">
