@@ -217,25 +217,15 @@ section {
 
   /* Gaya untuk bagian sumber data */
   .source-section {
-    margin-top: 1.5rem; /* Jarak aman di bawah tombol */
-  }
-
-  .source-title {
-    color: white;
-    font-size: 9px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 2px black;
+    margin-top: 1rem;
+    width: 100%;
   }
 
   .source-flex-container {
     display: flex;
-    flex-row: row;
     justify-content: center;
     align-items: flex-start;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
@@ -243,54 +233,60 @@ section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80px;
-    transition: transform 0.2s;
+    text-decoration: none;
+    width: 85px; /* Lebar default desktop */
   }
 
   .source-card {
     width: 100%;
-    height: 38px;      /* Tinggi dikunci mati di Desktop */
-    background-color: white;
-    padding: 5px;
-    border-radius: 5px;
+    height: 40px;      /* Tinggi tetap agar tidak menabrak tombol */
+    background-color: #ffffff;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-    margin-bottom: 4px;
+    padding: 6px;      /* Ruang napas agar logo tidak mentok pinggir */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    margin-bottom: 5px;
     overflow: hidden;
   }
 
   .source-card img {
+    /* RAHASIA AGAR TIDAK ZOOMED-IN */
+    width: auto;
+    height: auto;
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* JAMINAN: Gambar setinggi apapun tidak akan kepotong */
+    object-fit: contain; /* Memaksa logo utuh terlihat di dalam kotak */
+    display: block;
   }
 
   .source-label {
     color: white;
-    font-size: 8px;
-    font-weight: 600;
-    text-shadow: 1px 1px 2px black;
+    font-size: 9px;
+    font-weight: bold;
     text-align: center;
-    line-height: 1.1;
+    text-shadow: 1px 1px 2px black;
+    line-height: 1.2;
   }
 
+  /* PERBAIKAN KHUSUS HP (Tampilan Gambar 1) */
   @media (max-width: 576px) {
-    .source-section {
-      margin-top: 0.5rem; /* Sangat mepet ke tombol agar tombol aman klik */
-    }
     .source-link {
-      width: 55px; /* Makin ramping di HP */
+      width: 65px; /* Perkecil lebar item agar muat berjejer */
     }
+
     .source-card {
-      height: 24px; /* SUPER CEPER di HP: Solusi agar tidak menutupi tombol */
-      padding: 3px;
+      height: 30px; /* Perkecil tinggi agar ceper dan tidak menutupi tombol */
+      padding: 4px; /* Padding lebih kecil di HP */
+      border-radius: 4px;
     }
+
     .source-label {
-      font-size: 7px;
+      font-size: 7px; /* Teks sangat kecil agar rapi */
     }
+
     .source-flex-container {
-      gap: 6px; /* Jarak antar logo di HP dipersempit */
+      gap: 6px; /* Jarak antar kotak lebih rapat */
     }
   }
